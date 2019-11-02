@@ -6,10 +6,11 @@
 
 using namespace std;
 
-Checker::Checker(int* array, int array_length)
+Checker::Checker(int* array)
 {
   this->array = array;
-  this->array_length = array_length;
+  this->expectedArrayLength =  expectedArrayLength;
+  this->actualArrayLength = actualArrayLength;
 };
 
 bool Checker::isDuplicate()
@@ -29,12 +30,11 @@ bool Checker::isOutOfRange()
   return false;
 };
 
-void Checker::isCorrectLength()
+void Checker::isCorrectLength(int actualArrayLength, int expectedArrayLength)
 {
-  if (array_length != 27)
+  if (actualArrayLength != expectedArrayLength)
     {
-      cout << array_length << endl;
-      cout << "INVALID_ROTOR_MAPPING" << endl;
+      cout << "The input array is of incorrect length" << endl;
       exit(INVALID_ROTOR_MAPPING);
     } 
 }
@@ -80,64 +80,56 @@ void ArrayCreator::create()
       peek = file.peek();
       i++;
     }
-
+  actualArrayLength = i;
+  
   file.close();
 };
 
-
-void Rotor::setNotchPosition()
+int ArrayCreator::getActualArrayLength()
 {
-  notchPosition = originalRotorArray[26];
+  return actualArrayLength;
 };
 
 
-void Rotor::setRotorMap()
+Rotor::Rotor(int rotorNr, const char rotor_fname[], const char setup_fname[], int expectedArrayLength)
 {
-  for(int i = 0; i < 26; i++)
-    rotorMap = originalRotorArray[i];
-};
-  
 
-
-Rotor::Rotor(int rotorNr, const char rotor_fname[], const char setup_fname[])
-{
+  // create an array with parameters for Rotor
   ArrayCreator RotorOriginalArray(rotor_fname, originalRotorArray);
   RotorOriginalArray.create();
 
-  
+  //get the expected and the actual length fo the array
+  int actualArrayLength = RotorOriginalArray.getActualArrayLength();
+  this->expectedArrayLength = expectedArrayLength; 
 
-  cout << rotorMap[10] << endl;
-  cout << rotorMap[20] << endl;
-  cout << rotorMap[26] << endl;
+  //check rotor for correct length, duplicates and out of range values
+  Checker RotorCheck(originalRotorArray);
+  RotorCheck.isCorrectLength(actualArrayLength,expectedArrayLength);
+  bool outOfRange = RotorCheck.isOutOfRange();
 
-  
-  int length_of_array = 27;
-  Checker rotorCheck(rotorOutput, length_of_array);
-  rotorCheck.isCorrectLength();
-  bool duplicate = rotorCheck.isDuplicate();
-  bool outOfRange = rotorCheck.isOutOfRange();
-  if (duplicate)
-    {
-      cout << "DUPLICATE" << endl;
-      //      cout <<rotorOutput) << endl;
-    }
-  
   if (outOfRange)
     {
       cout << "OUT OF RANGE" << endl;
+      exit(INVALID_INDEX);
     }      // check for valid range
+
+
+  //assign first 26 values from the rotorArray into the rotorMap
+  for(int i = 0; i < 26; i++)
+    rotorMap[i] = originalRotorArray[i];
+
+  //check for duplicates
+  Checker RotorMap(rotorMap);
+  bool duplicate = RotorMap.isDuplicate();
+
+  if (duplicate)
+    {
+      cout << "DUPLICATE" << endl;
+      exit(INVALID_ROTOR_MAPPING);
+    }
+
+  //get the notch position
+  notchPosition = originalRotorArray[26];  
 }; 
 void Rotor::movePosition(){};
 void Rotor::getPosition(){};
-
-void Rotor::rotorSetup()
-{};
-void Rotor::verifyRotorSetup()
-{
-  
-  
-};
-
-//int Rotor::notchPosition =
-//int Rotor::currentPosition = 
-

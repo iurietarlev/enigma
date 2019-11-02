@@ -8,13 +8,14 @@
 class Checker
 {
  public:
-  Checker(int* array, int array_length);
+  Checker(int* array);
   bool isDuplicate();
   bool isOutOfRange();
-  void isCorrectLength();
+  void isCorrectLength(int actualArrayLength, int expectedArrayLength);
  private:
   int *array;
-  int array_length;
+  int expectedArrayLength;
+  int actualArrayLength;
 };
 
 class ArrayCreator
@@ -22,32 +23,29 @@ class ArrayCreator
  public:
   ArrayCreator(const char* filename, int* array);
   void create();
+  int getActualArrayLength();
  private:
   const char* filename;
   int* array;
+  int actualArrayLength;
 };     
 
 
 class Rotor
 {
  public:
-  Rotor(int rotorNr, const char rotor_fname[], const char setup_fname[]); 
+  Rotor(int rotorNr, const char rotor_fname[], const char setup_fname[], int expectedArrayLength); 
   void movePosition();
   void getPosition();
-  void rotorSetup();
-  void verifyRotorSetup();
 
 private:
   int rotorNr;
-  int* originalRotorArray;
-
-  void setNotchPosition();
-  void setRotorMap();
-  
-  int rotorMap[26]; 
+    
+  int originalRotorArray[100];
+  int rotorMap[26];
   int notchPosition; 
   int currentPosition;
-  //  const char mapping[];
+  int expectedArrayLength;
 
   
 };
