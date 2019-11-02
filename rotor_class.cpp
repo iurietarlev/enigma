@@ -6,8 +6,11 @@
 
 using namespace std;
 
-Checker::Checker(int* array)
-{this->array = array;};
+Checker::Checker(int* array, int array_length)
+{
+  this->array = array;
+  this->array_length = array_length;
+};
 
 bool Checker::isDuplicate()
 {
@@ -26,51 +29,91 @@ bool Checker::isOutOfRange()
   return false;
 };
 
-
-Rotor::Rotor(int rotorNr, const char rotor_fname[], const char setup_fname[])
+void Checker::isCorrectLength()
 {
-  ifstream file (rotor_fname);
+  if (array_length != 27)
+    {
+      cout << array_length << endl;
+      cout << "INVALID_ROTOR_MAPPING" << endl;
+      exit(INVALID_ROTOR_MAPPING);
+    } 
+}
+
+ArrayCreator::ArrayCreator(const char* filename, int* array)
+{
+  this->filename = filename;
+  this->array = array;
+}
+
+void ArrayCreator::create()
+{
+  ifstream file (filename);
   if (file.fail())
     { 
       cout << "This file couldn't be open" << endl;
-      exit(1);
+      exit(ERROR_OPENING_CONFIGURATION_FILE);
     }
-
-
-
+  
   file >> ws; // eat up any leading white spaces
   int temp;
   int i = 0;
-  for (; i < 27; i++)
+
+  char peek = file.peek();
+  while(peek != -1)
     {
-      char peek = file.peek();
       if (!isdigit(peek))
 	{
 	  if (peek != -1)
-	    cout << NON_NUMERIC_CHARACTER << endl;
+	    {
+	      cout << "NON_NUMERIC_CHARACTER" << endl;
+	      exit(NON_NUMERIC_CHARACTER);
+	    }
 	  break;
 	}
       
-      file >> temp;
-      
+      file >> temp; // store the number in temp variable
       file >> ws; // eat up any leading white sp
-	  rotorOutput[i] = temp;
-
-     
-      cout << rotorOutput[i] << " - " << i;
-      cout << endl;
+      array[i] = temp;
       
+      cout << array[i] << " - " << i;
+      cout << endl;
+      peek = file.peek();
+      i++;
     }
 
-  if (i != 27)
-    {
-      cout << i << endl;
-      cout << "INVALID_ROTOR_MAPPING" << endl;
-      exit(INVALID_ROTOR_MAPPING);
-    }
-       
+  file.close();
+};
+
+
+void Rotor::setNotchPosition()
+{
+  notchPosition = originalRotorArray[26];
+};
+
+
+void Rotor::setRotorMap()
+{
+  for(int i = 0; i < 26; i++)
+    rotorMap = originalRotorArray[i];
+};
   
-  Checker rotorCheck(rotorOutput);
+
+
+Rotor::Rotor(int rotorNr, const char rotor_fname[], const char setup_fname[])
+{
+  ArrayCreator RotorOriginalArray(rotor_fname, originalRotorArray);
+  RotorOriginalArray.create();
+
+  
+
+  cout << rotorMap[10] << endl;
+  cout << rotorMap[20] << endl;
+  cout << rotorMap[26] << endl;
+
+  
+  int length_of_array = 27;
+  Checker rotorCheck(rotorOutput, length_of_array);
+  rotorCheck.isCorrectLength();
   bool duplicate = rotorCheck.isDuplicate();
   bool outOfRange = rotorCheck.isOutOfRange();
   if (duplicate)
