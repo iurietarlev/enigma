@@ -8,13 +8,17 @@
 class Checker
 {
  public:
-  Checker(int iterNr, int currentNr, int* array);
+  Checker(int* array);
   bool isDuplicate();
   bool isOutOfRange(); 
  private:
-  int iterNr, currentNr, *array;
+  int *array;
 };
 
+class CheckForCharAndLength
+{
+ public:
+  CheckForCharAndLength
 	      
 
 

@@ -6,30 +6,23 @@
 
 using namespace std;
 
-Checker::Checker(int iterNr, int currentNr, int* array)
-{
-  
-  this->iterNr = iterNr;
-  this->currentNr = currentNr;
-  this->array = array;
-
-};
+Checker::Checker(int* array)
+{this->array = array;};
 
 bool Checker::isDuplicate()
 {
-  for(int j = 0; j < iterNr; j++)
-    if(currentNr == array[j])
-      return true;
+  for(int i = 1; i < 26; i++)
+    for(int j = 0; j < i; j++)
+      if(array[i] == array[j])
+	return true;
   return false;
 };
 
 bool Checker::isOutOfRange()
 {
-  if(currentNr < 0 || currentNr > 25)
-    {
-      //cout << INVALID_INDEX << endl;
+  for(int i = 0; i < 26; i++)
+    if(array[i] < 0 || array[i] > 25)
       return true;
-    }
   return false;
 };
 
@@ -47,48 +40,49 @@ Rotor::Rotor(int rotorNr, const char rotor_fname[], const char setup_fname[])
 
   file >> ws; // eat up any leading white spaces
   int temp;
-  for (int i = 0; i < 26; i++)
+  int i = 0;
+  for (; i < 27; i++)
     {
       char peek = file.peek();
       if (!isdigit(peek))
 	{
 	  if (peek != -1)
-	    {
-	      cout << NON_NUMERIC_CHARACTER << endl;
-	    }
-	  break;    
+	    cout << NON_NUMERIC_CHARACTER << endl;
+	  break;
 	}
-
+      
       file >> temp;
       
-      Checker rotorCheck(i, temp, rotorOutput);
-      bool duplicate = rotorCheck.isDuplicate();
-      bool outOfRange = rotorCheck.isOutOfRange();
-      if (duplicate  == true)
-	{
-	  cout << "DUPLICATE" << endl;
-	  break;
-	}
-      if (outOfRange == true)
-	{
-	  cout << "OUT OF RANGE" << endl;
-	  break;
-	}      // check for valid range
-		
+      file >> ws; // eat up any leading white sp
+	  rotorOutput[i] = temp;
+
+     
+      cout << rotorOutput[i] << " - " << i;
+      cout << endl;
       
-      
-      
- 
-		
-  //      if isDuplicate(i, temp, rotorOutput)
+    }
+
+  if (i != 27)
+    {
+      cout << i << endl;
+      cout << "INVALID_ROTOR_MAPPING" << endl;
+      exit(INVALID_ROTOR_MAPPING);
+    }
+       
   
-  file >> ws; // eat up any leading white sp
-  rotorOutput[i] = temp;
-  cout << rotorOutput[i];
-  cout << endl;
-      
-}
+  Checker rotorCheck(rotorOutput);
+  bool duplicate = rotorCheck.isDuplicate();
+  bool outOfRange = rotorCheck.isOutOfRange();
+  if (duplicate)
+    {
+      cout << "DUPLICATE" << endl;
+      //      cout <<rotorOutput) << endl;
+    }
   
+  if (outOfRange)
+    {
+      cout << "OUT OF RANGE" << endl;
+    }      // check for valid range
 }; 
 void Rotor::movePosition(){};
 void Rotor::getPosition(){};

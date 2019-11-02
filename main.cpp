@@ -12,7 +12,7 @@ int main(int argc, char** argv)
   //for(int i = 1; i < strlen(argv) - 1;
 
   
-  Rotor one(2, "rotors/letters.rot", "234");
+  Rotor one(2, "rotors/shift_up.rot", "234");
 
 
   one.getPosition();
