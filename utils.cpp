@@ -68,6 +68,8 @@ void createArray(const char* filename, int* array, int& actualArrayLength)
       i++;
     }
   actualArrayLength = i;
+
+  cout << " ==================== " << endl;
   
   file.close();
 }

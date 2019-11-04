@@ -73,5 +73,6 @@ Rotor::~Rotor(){
   cout << "Notch Array has died" << endl;
   delete[] notchArray;
 };
+
 void Rotor::movePosition(){};
 void Rotor::getPosition(){};
