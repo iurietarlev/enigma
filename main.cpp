@@ -1,13 +1,17 @@
 #include<iostream>
+#include"mainUtils.h"
 #include"errors.h"
 #include"rotClass.h"
 #include"posClass.h"
 #include"plgbrdClass.h"
 #include"rfClass.h"
+
 #include<cctype> //isupper, isspace
 #include<cstring>
 
 using namespace std;
+
+
 
 int main(int argc, char** argv)
 {
@@ -36,18 +40,15 @@ int main(int argc, char** argv)
   char inputString[80];
   
   cout << "Enter your message:" << endl;
-  cin >> skipws;
   cin.getline(inputString, 80);
+  //cout << inputString << endl;
 
-  cout << inputString << endl;
-
-  int inputMessage[strlen(inputString)];
-  int messageCount = 0;
+  int encMsg[strlen(inputString)];
+  int msgCount = 0;
 
   //check if the input is valid (put this in utils maybe?)
   int i = 0;
   char character;
-
   while(inputString[i] != '\0')
     {
       character = inputString[i];
@@ -60,36 +61,30 @@ int main(int argc, char** argv)
       
       if(isupper(character))
 	{
-	  inputMessage[messageCount] = character - 'A';
-	  messageCount++;
+	  //if isupper append message
+	  encMsg[msgCount] = character - 'A';
+	  msgCount++;
 	}
       i++;
     }
 
 
-  for(int i = 0; i < messageCount; i++)
-    cout << inputMessage[i] << " ";
+  for(int i = 0; i < msgCount; i++)
+    cout << encMsg[i] << " ";
   cout << endl;
   
+  //PLUGBOARD OPERATION  
+  pbOp(plugboard, encMsg, msgCount);
 
-  //PLUGBOARD OPERATION
-  int pbLength = plugboard.getPlgBrdLength();
-
-  for(int i = 0; i < messageCount; i++)
-    for(int j = 0; j < pbLength; j++)
-      {
-	if(plugboard.getIthInput(j) == inputMessage[i])
-	  inputMessage[i] = plugboard.getIthOutput(j);
-      }
-
-  for(int i = 0; i < messageCount; i++)
-    cout << inputMessage[i] << " ";
+ 
+  for(int i = 0; i < msgCount; i++)
+    cout << encMsg[i] << " ";
   cout << endl;
+ 
   
-  
-  
-  //Rotor rotors[3];
-  //rotors(1, "rotors/I.pos");
+
+    //Rotor Rotors[3];
+  //Rotors(1, "rotors/I.pos");
 
   //Rotor rotors[3]{};
   //Rotor rotor[3];

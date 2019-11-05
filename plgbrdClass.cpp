@@ -44,44 +44,28 @@ PlgBrd::PlgBrd(const char* plgBrdFname)
     }
 
   //length of input array and output array
-  arrayLength = originalArrayLength/2;
+  arrayLength = originalArrayLength;//2;
 
+  plgMap = new int[originalArrayLength]; 
 
-  input[0] = originalArray[0];
-  output[0] = originalArray[1];
+  for(int i = 0; i < originalArrayLength; i++)
+    plgMap[i] = originalArray[i];
 
-  int countEven = 1;
-  int countOdd = 1;
-  for(int i = 2; i<originalArrayLength; i++)
-    {
-      if(i%2 == 0)
-	{
-	  input[countEven] = originalArray[i];
-	  countEven++;
-	}
-      else
-	{
-	  output[countOdd] = originalArray[i];
-	  countOdd++;
-	}
-    }
-};
+  };
   
-
 /* ============== GET NR OF VALUES TO BE MAPPED ============== */
-int PlgBrd::getPlgBrdLength()
+int PlgBrd::getLength()
 {
   return arrayLength;
 };
 
-/* ============== GET THE ITH ELEMENT IN THE INPUT ARRAY ============== */
-int PlgBrd::getIthInput(int i)
-{
-  return input[i];
-};
 
-/* ============== GET THE ITH ELEMENT IN THE OUTPUT ARRAY ============== */
-int PlgBrd::getIthOutput(int i)
+int* PlgBrd::getMap()
 {
-  return output[i];
-};
+  return plgMap;
+}
+  
+PlgBrd::~PlgBrd(){
+  delete[] plgMap;
+  cout << "Plugboard has died" << endl;
+}

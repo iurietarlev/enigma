@@ -70,8 +70,8 @@ void Rotor::initialize(int rotorNr, const char rotor_fname[])
 
 //Rotor destructor
 Rotor::~Rotor(){
-  cout << "Notch Array has died" << endl;
   delete[] notchArray;
+  cout << "Notch Array has died" << endl;
 };
 
 void Rotor::movePosition(){};

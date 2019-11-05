@@ -1,4 +1,4 @@
-OBJ = main.o rotClass.o posClass.o plgbrdClass.o rfClass.o utils.o
+OBJ = main.o mainUtils.o rotClass.o posClass.o plgbrdClass.o rfClass.o utils.o
 CXX = g++
 CXXFLAGS = -Wall -g #-Wextra
 EXE = enigma
@@ -9,6 +9,9 @@ $(EXE): $(OBJ)
 
 
 main.o: main.cpp rotClass.h posClass.h
+	$(CXX) $(CXXFLAGS) -c $<
+
+mainUtils.o: mainUtils.cpp mainUtils.h
 	$(CXX) $(CXXFLAGS) -c $<
 
 rotClass.o: rotClass.cpp rotClass.h utils.h
