@@ -1,4 +1,5 @@
 #include"errors.h"
+#include"classUtils.h"
 #include<cctype> //std::isdigit
 #include<iostream>
 #include<fstream>
@@ -32,6 +33,7 @@ bool duplicates(int* array, int arrayLength)
 //Arrays55
 void createArray(const char* filename, int* array, int& actualArrayLength)
 {
+
   ifstream file (filename);
   if (file.fail())
     { 
@@ -45,14 +47,15 @@ void createArray(const char* filename, int* array, int& actualArrayLength)
 
   char peek = file.peek();
 
-  //read integers until reach end or 80 integers
-  while(peek != -1 || i == 80)
+  //read integers until reach eof or 80 integers
+  while(!file.eof() || i < 80)
     {
       if (!isdigit(peek))
 	{
-	  if (peek != -1)
+	  if(peek != -1) //exit if non-char
 	    {
-	      cout << "NON_NUMERIC_CHARACTER" << endl;
+	      cout <<"File " << filename
+		   << " contains a non-numeric character" << endl;
 	      exit(NON_NUMERIC_CHARACTER);
 	    }
 	  break;
@@ -73,3 +76,4 @@ void createArray(const char* filename, int* array, int& actualArrayLength)
   
   file.close();
 }
+

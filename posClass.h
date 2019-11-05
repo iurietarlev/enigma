@@ -5,8 +5,11 @@ class Position
 {
  public:
   Position(const char positionFname[], int expectedArrayLength);
+  ~Position();
+  int getStartPos(int rotor_index);
+
  private:
-  int positionArray[80];
+  int * array;
   int expectedArrayLenght;
 };
 

@@ -1,7 +1,7 @@
-#include"plgbrdClass.h"
+#include"pbClass.h"
 
 // function to convert characters through the plugboard
-void pbOp(PlgBrd &pb, int* encMsg, const int msgLength)
+void pbOp(Pb &pb, int* encMsg, const int msgLength)
 {
   int* pbMap = pb.getMap();
   int pbLength = pb.getLength();

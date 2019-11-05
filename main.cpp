@@ -3,7 +3,7 @@
 #include"errors.h"
 #include"rotClass.h"
 #include"posClass.h"
-#include"plgbrdClass.h"
+#include"pbClass.h"
 #include"rfClass.h"
 
 #include<cctype> //isupper, isspace
@@ -20,7 +20,7 @@ int main(int argc, char** argv)
   
   // COMMAND LINE ARGS
   //plugboard
-  PlgBrd plugboard(argv[1]);
+  Pb plugboard(argv[1]);
 
   //reflector
   Reflector reflector(argv[2]);
@@ -28,10 +28,10 @@ int main(int argc, char** argv)
   //rotors
   int nrOfRotors = argc - 4;
   
-  Rotor rotors[nrOfRotors]{};
+  Rotor rotor[nrOfRotors]{};
   
   for(int i = 3; i < argc - 1; i++)
-    rotors[i-3].initialize(i - 2, argv[i]);
+    rotor[i-3].initialize(i - 2, argv[i]);
 
   
   // position
@@ -73,20 +73,45 @@ int main(int argc, char** argv)
     cout << encMsg[i] << " ";
   cout << endl;
   
+  /*
   //PLUGBOARD OPERATION  
   pbOp(plugboard, encMsg, msgCount);
 
- 
   for(int i = 0; i < msgCount; i++)
     cout << encMsg[i] << " ";
   cout << endl;
- 
+  */
+
+
+
+  //ROTORS OPERATION
+  
+  // set the starting position
+  for(int i = 0; i < nrOfRotors; i++)
+    {
+      rotor[i].setStartPos(position.getStartPos(i));
+      //cout << rotor[i].getStartPos(i) << endl;
+    }
+
+  // map the values
+  for(int i = 0; i < msgCount; i++)
+    {
+      encMsg[i] = rotor[0].getCurtPosVal();
+      rotor[0].mvPos();
+    }
+
+  //check output after rotors operation
+  for(int i = 0; i < msgCount; i++)
+    cout << encMsg[i] << " ";
+  cout << endl;
   
 
+
+  
     //Rotor Rotors[3];
   //Rotors(1, "rotors/I.pos");
 
-  //Rotor rotors[3]{};
+  //Rotor rotor[3]{};
   //Rotor rotor[3];
 
   //rotor[0].initialize(1, "rotors/letters.rot");

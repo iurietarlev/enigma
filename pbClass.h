@@ -2,19 +2,17 @@
 #define PLGBRD_CLASS
 
 
-class PlgBrd
+class Pb
 {
  public:
-  PlgBrd(const char* plgBrdFname);
+  Pb(const char* pbFname);
 
   int* getMap();
   int getLength();
-  //int getIthInput(int i);
-  //int getIthOutput(int i);
-  ~PlgBrd();
+  ~Pb();
   
  private:
-  int* plgMap;
+  int* pbMap;
   int arrayLength;
   //int input[13];
   //int output[13];

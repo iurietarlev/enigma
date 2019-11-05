@@ -1,6 +1,6 @@
 #include<iostream>
 #include"errors.h"
-#include"utils.h"
+#include"classUtils.h"
 #include"rfClass.h"
 
 using namespace std;

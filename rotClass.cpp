@@ -2,13 +2,13 @@
 #include"rotClass.h"
 #include<iostream>
 
-#include"utils.h"
+#include"classUtils.h"
 
 using namespace std;
 
 Rotor::Rotor(){
   //default dynamic memory allocation
-  notchArray = new int[1];
+  notchPos = new int[1];
 };
 
 void Rotor::initialize(int rotorNr, const char rotor_fname[])
@@ -57,22 +57,45 @@ void Rotor::initialize(int rotorNr, const char rotor_fname[])
   nrOfNotches = actualArrayLength - 26;
 
   //overwrite default notch array with the actual number of notches
-  notchArray = new int[nrOfNotches];
+  notchPos = new int[nrOfNotches];
 
   cout << "Number of Notches = " << nrOfNotches << endl;
   cout << "26th index of originalRotorArray = " << originalRotorArray[26] << endl;
   for(int i = 0; i < nrOfNotches; i++)
     {
-      notchArray[i] = originalRotorArray[26+i];
-      cout <<  notchArray[i] << endl;
+      notchPos[i] = originalRotorArray[26+i];
+      cout <<  notchPos[i] << endl;
     }
 };
 
-//Rotor destructor
-Rotor::~Rotor(){
-  delete[] notchArray;
-  cout << "Notch Array has died" << endl;
+
+int Rotor::getStartPos(int rotIndex)
+{
+  return startPos;
 };
 
-void Rotor::movePosition(){};
-void Rotor::getPosition(){};
+void Rotor::setStartPos(int startPos)
+{
+  curtPos = startPos;
+  curtPosVal = rotorMap[startPos];
+  this->startPos = startPos;
+};
+
+void Rotor::mvPos()
+{
+  curtPos++;
+  curtPosVal = rotorMap[curtPos]; 
+};
+
+int Rotor::getCurtPos()
+{return curtPos;};
+
+
+int Rotor::getCurtPosVal()
+{return curtPosVal;};
+
+//Rotor destructor
+Rotor::~Rotor(){
+  delete[] notchPos;
+  cout << "Notch Array has died" << endl;
+};

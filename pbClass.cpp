@@ -1,16 +1,16 @@
 #include<iostream>
 #include"errors.h"
-#include"utils.h"
-#include"plgbrdClass.h"
+#include"classUtils.h"
+#include"pbClass.h"
 
 using namespace std;
 
 /* ============== PLUGBOARD CONSTRUCTOR ============== */
-PlgBrd::PlgBrd(const char* plgBrdFname)
+Pb::Pb(const char* pbFname)
 {
   int originalArray[80];
   int originalArrayLength;
-  createArray(plgBrdFname, originalArray, originalArrayLength);
+  createArray(pbFname, originalArray, originalArrayLength);
 
 
   // if length is 
@@ -46,26 +46,27 @@ PlgBrd::PlgBrd(const char* plgBrdFname)
   //length of input array and output array
   arrayLength = originalArrayLength;//2;
 
-  plgMap = new int[originalArrayLength]; 
+  pbMap = new int[originalArrayLength]; 
 
   for(int i = 0; i < originalArrayLength; i++)
-    plgMap[i] = originalArray[i];
+    pbMap[i] = originalArray[i];
 
   };
-  
+
+
 /* ============== GET NR OF VALUES TO BE MAPPED ============== */
-int PlgBrd::getLength()
+int Pb::getLength()
 {
   return arrayLength;
 };
 
 
-int* PlgBrd::getMap()
+int* Pb::getMap()
 {
-  return plgMap;
+  return pbMap;
 }
   
-PlgBrd::~PlgBrd(){
-  delete[] plgMap;
+Pb::~Pb(){
+  delete[] pbMap;
   cout << "Plugboard has died" << endl;
 }
