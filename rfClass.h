@@ -5,12 +5,12 @@ class Reflector
 {
  public:
   Reflector(const char* rfFname);
-  int getIthInput(int i);
-  int getIthOutput(int i);
+  int* getMap();
+  int getLength();
   
  private:
-  int input[13];
-  int output[13];
+  int rfMap[26];
+  int arrayLength = 26;
 };
 
 #endif

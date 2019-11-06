@@ -36,36 +36,19 @@ Reflector::Reflector(const char* rfFname)
       cout << "One of the inputs of reflector seems to be mapped to itself or mapped twice."  << endl;
       exit(INVALID_REFLECTOR_MAPPING);
     }
+  
+  for(int i = 0; i < originalArrayLength; i++)
+    rfMap[i] = originalArray[i];
 
-  input[0] = originalArray[0];
-  output[0] = originalArray[1];
-
-  int countEven = 1;
-  int countOdd = 1;
-  for(int i = 2; i<originalArrayLength; i++)
-    {
-      if(i%2 == 0)
-	{
-	  input[countEven] = originalArray[i];
-	  countEven++;
-	}
-      else
-	{
-	  output[countOdd] = originalArray[i];
-	  countOdd++;
-	}
-    }
 };
   
-
-/* ============== GET THE ITH ELEMENT IN THE INPUT ARRAY ============== */
-int Reflector::getIthInput(int i)
+int Reflector::getLength()
 {
-  return input[i];
+  return arrayLength;
 };
 
-/* ============== GET THE ITH ELEMENT IN THE OUTPUT ARRAY ============== */
-int Reflector::getIthOutput(int i)
+
+int* Reflector::getMap()
 {
-  return output[i];
-};
+  return rfMap;
+}

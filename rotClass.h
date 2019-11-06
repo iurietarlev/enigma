@@ -11,6 +11,9 @@ class Rotor
   void mvPos();
   int getCurtPos();
   int getCurtPosVal();
+  int getNotchPos(int i);
+  int getNrOfNotches();
+  int getPosOfVal(int val);
   ~Rotor();
 
  private:

@@ -42,7 +42,10 @@ void Rotor::initialize(int rotorNr, const char rotor_fname[])
  
   //assign first 26 values from the rotorArray into the rotorMap
   for(int i = 0; i < 26; i++)
-    rotorMap[i] = originalRotorArray[i];
+    {
+      rotorMap[i] = originalRotorArray[i];
+    }
+      
 
   
   //check for duplicates
@@ -84,6 +87,9 @@ void Rotor::setStartPos(int startPos)
 void Rotor::mvPos()
 {
   curtPos++;
+  if(curtPos > 25)
+    curtPos = 0;
+  
   curtPosVal = rotorMap[curtPos]; 
 };
 
@@ -93,6 +99,24 @@ int Rotor::getCurtPos()
 
 int Rotor::getCurtPosVal()
 {return curtPosVal;};
+
+
+int Rotor::getNrOfNotches()
+{return nrOfNotches;}
+
+
+int Rotor::getNotchPos(int i)
+{
+  return notchPos[i];
+}
+
+int Rotor::getPosOfVal(int val)
+{
+  for(int i = 0; i < 26; i++)
+    if(val == rotorMap[26])
+      return i;
+}
+
 
 //Rotor destructor
 Rotor::~Rotor(){

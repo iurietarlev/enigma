@@ -29,12 +29,13 @@ Position::Position(const char positionFname[], int expectedArrayLength)
       cout << "Insufficient parameters for rotors starting positions." << endl;
       exit(NO_ROTOR_STARTING_POSITION);
     }
-
+  /*
   if (actualArrayLength > expectedArrayLength)
     {
       cout << "Too many parameters for rotors starting positions." << endl;
       exit(1);
     }
+  */
 };
 
 int Position:: getStartPos(int rotorIndex)
