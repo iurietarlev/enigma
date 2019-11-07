@@ -6,6 +6,15 @@
 
 using namespace std;
 
+
+// mod of negative numbers
+int mod(int x, int n)
+{
+  return (x%n + n)%n;
+};
+
+
+
 bool rangeOk(int* array, int arrayLength)
 {
   for(int i = 0; i < arrayLength; i++)
@@ -29,6 +38,16 @@ bool duplicates(int* array, int arrayLength)
 	return true;
   return false;
 }
+
+bool duplicates2d(int array[26][4], int arrayLength)
+{
+  for(int i = 1; i < arrayLength; i++)
+    for(int j = 0; j < i; j++)
+      if(array[i][1] == array[j][1])
+	return true;
+  return false;
+}
+
 
 //Arrays55
 void createArray(const char* filename, int* array, int& actualArrayLength)

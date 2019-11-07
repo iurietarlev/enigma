@@ -1,10 +1,12 @@
 #include<iostream>
 #include"mainUtils.h"
+#include"classUtils.h" 
 #include"errors.h"
 #include"rotClass.h"
 #include"posClass.h"
 #include"pbClass.h"
 #include"rfClass.h"
+
 
 #include<cctype> //isupper, isspace
 #include<cstring>
@@ -12,34 +14,33 @@
 using namespace std;
 
 
-
-
-
 bool notchesAlignment(Rotor* rotor, int rotIndex){
-    
-    int rotWithAlignedNotches[rotIndex] = {0};
-    
-    for(int i = 1; i <= rotIndex; i++)
-      {
-	int curtPos = rotor[rotIndex-i].getCurtPos();
-	int nrOfNotches = rotor[rotIndex-i].getNrOfNotches();
-	for(int notchPosIndex = 0; notchPosIndex < nrOfNotches; notchPosIndex++)
-	  {
-	    if(curtPos == rotor[rotIndex-i].getNotchPos(notchPosIndex))
-	      {
-		rotWithAlignedNotches[rotIndex-i] = 1;
-		break;
-	      }
-	  }
-      }
-    
-    for(int i = 0; i < rotIndex; i++)
-      if(rotWithAlignedNotches[i] != 1)
-	return false;
-    
+  if(rotIndex == 0)
     return true;
+   
+  int rotWithAlignedNotches[rotIndex] = {0};
     
-  }
+  for(int i = 1; i <= rotIndex; i++)
+    {
+      int curtPos = rotor[rotIndex-i].getCurtPos();
+      int nrOfNotches = rotor[rotIndex-i].getNrOfNotches();
+      for(int notchPosIndex = 0; notchPosIndex < nrOfNotches; notchPosIndex++)
+	{
+	  if(curtPos == rotor[rotIndex-i].getNotchPos(notchPosIndex))
+	    {
+	      rotWithAlignedNotches[rotIndex-i] = 1;
+	      break;
+	    }
+	}
+    }
+    
+  for(int i = 0; i < rotIndex; i++)
+    if(rotWithAlignedNotches[i] != 1)
+      return false;
+    
+  return true;
+    
+}
 
 
 int main(int argc, char** argv)
@@ -137,8 +138,24 @@ int main(int argc, char** argv)
     }
   */
 
+  
+  
+  /*
+  
+  cout << "PRINTING THE ROTOR ARRAY" << endl;
+  for(int i= 0; i < 26; i++)
+    {
+      for(int j = 0; j < 4; j++)
+	cout << rotor[0].rotorMap[i][j] << " ";
+      cout << endl;
+    }
+
+
+  cout << "FINISHED PRINTING THE ROTOR ARRAY" << endl;
+  */
+  
   //===============================================================
- 
+  /*
   if(nrOfRotors > 0)
     {
       for(int rotIndex = 0; rotIndex < nrOfRotors; rotIndex++)
@@ -177,7 +194,228 @@ int main(int argc, char** argv)
  cout << endl;
  
  //============================================================= 
+	 
+ */
+  //rotMap[][4]
+ //rotMap[][0] = absPos;
+ //rotMap[][1] = valInAbsPos;
+ //rotMap[][2] = mappedVal;
+ //rotMap[][3] = mappedValAbsPos;
+
+
+    
+    
+  //set starting position for all the rotors
+  for(int rotIndex = 0; rotIndex < nrOfRotors; rotIndex++)
+    rotor[rotIndex].setStartPos(position.getStartPos(rotIndex));
+
+  cout << "PRINTING THE ROTOR ARRAY" << endl;
+  for(int i= 0; i < 26; i++)
+    {
+      for(int j = 0; j < 4; j++)
+	cout << rotor[0].rotorMap[i][j] << " ";
+      cout << endl;
+    }
+  cout << "FINISHED PRINTING THE ROTOR ARRAY" << endl;
   
+
+  // ROTORS OPERATION 
+  for(int i = 0; i < msgCount; i++)
+    {
+      //rotors forwards
+      for(int rotIndex = 0; rotIndex < nrOfRotors; rotIndex++)
+	{
+	  if(notchesAlignment(rotor, rotIndex))
+	    {
+	      //move by one position
+	      rotor[rotIndex].mvPos();
+	      
+	      //get the absolute value on the other end
+	      
+	    }
+	  encMsg[i] = rotor[rotIndex].getLeftMostVal(encMsg[i]);
+
+	}
+
+
+      for(int i = 0; i < msgCount; i++)
+	{
+	  char c = encMsg[i] + 'A';
+	  cout << c << " ";
+	}
+      cout << endl;  
+  
+
+      
+      //reflector
+      rfOp(reflector, encMsg[i], msgCount);
+
+
+      for(int i = 0; i < msgCount; i++)
+	{
+	  char c = encMsg[i] + 'A';
+	  cout << c << " ";
+	}
+      cout << endl;  
+
+
+      
+      for(int rotIndex = nrOfRotors - 1; rotIndex >= 0; rotIndex--)
+	{
+	  encMsg[i] = rotor[rotIndex].getRightMostVal(encMsg[i]);
+	}
+
+
+      for(int i = 0; i < msgCount; i++)
+	{
+	  char c = encMsg[i] + 'A';
+	  cout << c << " ";
+	}
+      cout << endl;  
+
+      
+    }
+
+  
+  cout << "PRINTING THE ROTOR ARRAY" << endl;
+  for(int i= 0; i < 26; i++)
+    {
+      for(int j = 0; j < 4; j++)
+	cout << rotor[0].rotorMap[i][j] << " ";
+      cout << endl;
+    }
+  cout << "FINISHED PRINTING THE ROTOR ARRAY" << endl;
+  
+  
+  for(int i = 0; i < msgCount; i++)
+    {
+      char c = encMsg[i] + 'A';
+      cout << c << " ";
+    }
+  cout << endl;  
+
+  //REFLECTOR OPERATION
+//rfOp(reflector, encMsg, msgCount);
+
+
+  for(int i = 0; i < msgCount; i++)
+    {
+      char c = encMsg[i] + 'A';
+      cout << c << " ";
+    }
+  cout << endl;  
+  
+  //ROTORS BACKWARDS
+  for(int i = 0; i < msgCount; i++)
+    {
+      for(int rotIndex = nrOfRotors - 1; rotIndex >= 0; rotIndex--)
+	{
+	  encMsg[i] = rotor[rotIndex].getRightMostVal(encMsg[i]);
+	}
+    }
+    
+
+  
+  /*
+  for(int j = 0; j < 26; j++)
+    {
+      if(rotor[rotIndex].rotorMap[j][3] == encMsg[i])
+	{
+	  cout << "THIS IS J:" << j << endl;
+	  rotor[rotIndex].mvPos();
+	  encMsg[i] = rotor[rotIndex].rotorMap[mod(j+1,26)][0];
+	  cout << "PRINTING THE ROTOR ARRAY" << endl;
+	  for(int i= 0; i < 26; i++)
+	    {
+	      for(int j = 0; j < 4; j++)
+		cout << rotor[0].rotorMap[i][j] << " ";
+	      cout << endl;
+	    }
+	  cout << "FINISHED PRINTING THE ROTOR ARRAY" << endl;
+	  break;
+	}
+    }
+
+  for(int i = 0; i < msgCount; i++)
+    cout << encMsg[i] << " ";
+  cout << endl;  
+    */
+
+  
+      /*
+  if(nrOfRotors >0)
+    {
+      for(int rotIndex = 0; rotIndex < nrOfRotors; rotIndex++)
+	{
+	  // set the starting position for one rotor
+	  rotor[rotIndex].setStartPos(position.getStartPos(rotIndex));
+	}
+      for(int i = 0; i < msgCount; i++)
+	{
+	  int rotIndex = 0;
+	  while(rotIndex < nrOfRotors)
+	    {
+	      if(rotIndex == 0)
+		{
+		  for(int j = 0; j < 26; j++)
+		    {
+		      if(rotor[rotIndex].rotorMap[j][3] == encMsg[i])
+			{
+			  rotor[rotIndex].mvPos();
+			  encMsg[i] = rotor[rotIndex].rotorMap[j][0];
+			  cout << "PRINTING THE ROTOR ARRAY" << endl;
+			  for(int i= 0; i < 26; i++)
+			    {
+			      for(int j = 0; j < 4; j++)
+				cout << rotor[0].rotorMap[i][j] << " ";
+			      cout << endl;
+			    }
+
+
+			  cout << "FINISHED PRINTING THE ROTOR ARRAY" << endl;
+
+			}
+		    }
+		}
+	      else
+		{
+		  if(notchesAlignment(rotor, rotIndex))
+		    {
+		      rotor[rotIndex].mvPos();
+		      for(int j = 0; j < 26; j++)
+			encMsg[i] = rotor[rotIndex].rotorMap[j][0];
+		    }
+		}
+	      
+
+	      if (rotIndex < nrOfRotors -1)
+		{
+		  for(int j = 0; j < 26; j++)
+		    if(rotor[rotIndex].rotorMap[encMsg[i]][0] == rotor[rotIndex+1].rotorMap[j][3])
+		      {
+			encMsg[i] = rotor[rotIndex+1].rotorMap[j][1];
+		      }
+		    else
+		      {
+			cout << "COULDN'T FIND A MATCH IN THE OTHER ROTOR" << endl;
+			exit(5);
+		      }
+		}
+	      rotIndex++;
+	    }
+	  //cout << encMsg[i] << endl;
+    	}
+    }
+      */
+  //check output after rotors operation
+  for(int i = 0; i < msgCount; i++)
+    {
+      char c = encMsg[i] + 'A';
+      cout << c << " ";
+    }
+  cout << endl;  
+
+ 
     //Rotor Rotors[3];
   //Rotors(1, "rotors/I.pos");
 

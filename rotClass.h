@@ -15,10 +15,14 @@ class Rotor
   int getNrOfNotches();
   int getPosOfVal(int val);
   ~Rotor();
+  int rotorMap[26][4];
+
+  int getLeftMostVal(int rightMostVal);
+  int getRightMostVal(int leftMostVal);
 
  private:
   int rotorNr;    
-  int rotorMap[26];
+  //  int rotorMap[26][4];
 
   int nrOfNotches;
   int* notchPos; 
