@@ -103,14 +103,13 @@ int main(int argc, char** argv)
     cout << encMsg[i] << " ";
   cout << endl;
   
-  /*
+
   //PLUGBOARD OPERATION  
   pbOp(plugboard, encMsg, msgCount);
 
   for(int i = 0; i < msgCount; i++)
     cout << encMsg[i] << " ";
   cout << endl;
-  */
 
 
 
@@ -218,7 +217,7 @@ int main(int argc, char** argv)
     }
   cout << "FINISHED PRINTING THE ROTOR ARRAY" << endl;
   
-
+  
   // ROTORS OPERATION 
   for(int i = 0; i < msgCount; i++)
     {
@@ -234,7 +233,6 @@ int main(int argc, char** argv)
 	      
 	    }
 	  encMsg[i] = rotor[rotIndex].getLeftMostVal(encMsg[i]);
-
 	}
 
 
@@ -259,7 +257,7 @@ int main(int argc, char** argv)
       cout << endl;  
 
 
-      
+      //rotors path backwards
       for(int rotIndex = nrOfRotors - 1; rotIndex >= 0; rotIndex--)
 	{
 	  encMsg[i] = rotor[rotIndex].getRightMostVal(encMsg[i]);
@@ -275,6 +273,11 @@ int main(int argc, char** argv)
 
       
     }
+
+  //go through plugboard again
+  pbOp(plugboard, encMsg, msgCount);
+
+  
 
   
   cout << "PRINTING THE ROTOR ARRAY" << endl;
@@ -305,14 +308,6 @@ int main(int argc, char** argv)
     }
   cout << endl;  
   
-  //ROTORS BACKWARDS
-  for(int i = 0; i < msgCount; i++)
-    {
-      for(int rotIndex = nrOfRotors - 1; rotIndex >= 0; rotIndex--)
-	{
-	  encMsg[i] = rotor[rotIndex].getRightMostVal(encMsg[i]);
-	}
-    }
     
 
   
