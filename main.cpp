@@ -111,97 +111,22 @@ int main(int argc, char** argv)
   cout << endl;
 
 
+  cout << "PRINT THE PLUGBOARD" << endl;
+  int* pbMap = plugboard.getMap();
+  int pbLength = plugboard.getLength();
 
-  //ROTORS OPERATION
-  /*
-  if(nrOfRotors > 0)
-    {
-      for(int rotIndex = 0; rotIndex < nrOfRotors; rotIndex++)
-	{
-	  // set the starting position for one rotor
-	  rotor[rotIndex].setStartPos(position.getStartPos(rotIndex));
-	  
-	  // map the values
-	  for(int i = 0; i < msgCount; i++)
-	    {
-	      rotor[rotIndex].mvPos();
-	      encMsg[i] = rotor[rotIndex].getCurtPosVal();	  
-	    }
+  for(int i = 0; i < pbLength; i++)
+    cout << pbMap[i] << " " << endl;
+  cout << "FINISH PRINT THE PLUGBOARD" << endl;
 
-	  //check output after rotors operation
-	  for(int i = 0; i < msgCount; i++)
-	    cout << encMsg[i] << " ";
-	  cout << endl;
-	}
-    }
-  */
+  cout << "PRINT THE REFLECTOR" << endl;
+  int* rfMap = reflector.getMap();
+  int rfLength = reflector.getLength();
 
+  for(int i = 0; i < rfLength; i++)
+    cout << rfMap[i] << " " << endl;
+  cout << "FINISH PRINT THE REFLECTOR" << endl;
   
-  
-  /*
-  
-  cout << "PRINTING THE ROTOR ARRAY" << endl;
-  for(int i= 0; i < 26; i++)
-    {
-      for(int j = 0; j < 4; j++)
-	cout << rotor[0].rotorMap[i][j] << " ";
-      cout << endl;
-    }
-
-
-  cout << "FINISHED PRINTING THE ROTOR ARRAY" << endl;
-  */
-  
-  //===============================================================
-  /*
-  if(nrOfRotors > 0)
-    {
-      for(int rotIndex = 0; rotIndex < nrOfRotors; rotIndex++)
-	{
-	  // set the starting position for one rotor
-	  rotor[rotIndex].setStartPos(position.getStartPos(rotIndex));
-	}
-    
-      for(int i = 0; i < msgCount; i++)
-	{
-	  int rotIndex = 0;
-	  while(rotIndex < nrOfRotors)
-	    {
-	      if(rotIndex == 0)
-		rotor[rotIndex].mvPos();
-	      else
-		{
-		  if(notchesAlignment(rotor, rotIndex))
-		    rotor[rotIndex].mvPos();
-		}
-	
-	      encMsg[i] = rotor[rotIndex].getCurtPosVal();
-	      rotIndex++;
-	    }
-	  cout << encMsg[i] << endl;
-	}
-
-    }
-  
-  //rfOp(reflector, encMsg, msgCount)
-
- 
- //check output after rotors operation
- for(int i = 0; i < msgCount; i++)
-   cout << encMsg[i] << " ";
- cout << endl;
- 
- //============================================================= 
-	 
- */
-  //rotMap[][4]
- //rotMap[][0] = absPos;
- //rotMap[][1] = valInAbsPos;
- //rotMap[][2] = mappedVal;
- //rotMap[][3] = mappedValAbsPos;
-
-
-    
     
   //set starting position for all the rotors
   for(int rotIndex = 0; rotIndex < nrOfRotors; rotIndex++)

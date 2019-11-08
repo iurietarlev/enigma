@@ -35,10 +35,9 @@ void rfOp(Reflector &pb, int& encMsg, const int msgLength)
   int* pbMap = pb.getMap();
   int pbLength = pb.getLength();
 
-  std::cout << "PRINT THE PLUGBOARD" << endl;
+  
   for(int j = 0; j < pbLength; j++)
     {
-      cout << pbMap[j] << " " << endl;
       if (encMsg == pbMap[j])
 	{
 	  if(j%2 == 0)
@@ -53,5 +52,4 @@ void rfOp(Reflector &pb, int& encMsg, const int msgLength)
 	    }
 	}
     }
-  std::cout << "FINISH PRINT THE PLUGBOARD" << endl;
 }
