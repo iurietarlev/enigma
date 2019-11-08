@@ -84,8 +84,7 @@ int main(int argc, char** argv)
       character = inputString[i];
       if(!isspace(character) && !isupper(character))
 	{
-	  cout << "Invalid input message, it must be capitals A-Z only."
-	       << endl;
+	  cout << character << "is not a valid input character (input characters must be upper case letters A-Z)!" << endl;
 	  exit(INVALID_INPUT_CHARACTER);
 	}
       
@@ -221,20 +220,22 @@ int main(int argc, char** argv)
   // ROTORS OPERATION 
   for(int i = 0; i < msgCount; i++)
     {
-      //rotors forwards
-      for(int rotIndex = 0; rotIndex < nrOfRotors; rotIndex++)
+      if(nrOfRotors > 0)
 	{
-	  if(notchesAlignment(rotor, rotIndex))
-	    {
-	      //move by one position
-	      rotor[rotIndex].mvPos();
+	//rotors forwards
+	for(int rotIndex = 0; rotIndex < nrOfRotors; rotIndex++)
+	  {
+	    if(notchesAlignment(rotor, rotIndex))
+	      {
+		//move by one position
+		rotor[rotIndex].mvPos();
 	      
-	      //get the absolute value on the other end
+		//get the absolute value on the other end
 	      
-	    }
-	  encMsg[i] = rotor[rotIndex].getLeftMostVal(encMsg[i]);
+	      }
+	    encMsg[i] = rotor[rotIndex].getLeftMostVal(encMsg[i]);
+	  }
 	}
-
 
       for(int i = 0; i < msgCount; i++)
 	{
@@ -257,10 +258,14 @@ int main(int argc, char** argv)
       cout << endl;  
 
 
-      //rotors path backwards
-      for(int rotIndex = nrOfRotors - 1; rotIndex >= 0; rotIndex--)
+
+      if(nrOfRotors > 0)
 	{
-	  encMsg[i] = rotor[rotIndex].getRightMostVal(encMsg[i]);
+	  //rotors path backwards
+	  for(int rotIndex = nrOfRotors - 1; rotIndex >= 0; rotIndex--)
+	    {
+	      encMsg[i] = rotor[rotIndex].getRightMostVal(encMsg[i]);
+	    }
 	}
 
 
@@ -274,7 +279,7 @@ int main(int argc, char** argv)
       
     }
 
-  //go through plugboard again
+  //go through plugboard backwards
   pbOp(plugboard, encMsg, msgCount);
 
   
@@ -290,16 +295,6 @@ int main(int argc, char** argv)
   cout << "FINISHED PRINTING THE ROTOR ARRAY" << endl;
   
   
-  for(int i = 0; i < msgCount; i++)
-    {
-      char c = encMsg[i] + 'A';
-      cout << c << " ";
-    }
-  cout << endl;  
-
-  //REFLECTOR OPERATION
-//rfOp(reflector, encMsg, msgCount);
-
 
   for(int i = 0; i < msgCount; i++)
     {
@@ -307,131 +302,9 @@ int main(int argc, char** argv)
       cout << c << " ";
     }
   cout << endl;  
-  
-    
 
-  
-  /*
-  for(int j = 0; j < 26; j++)
-    {
-      if(rotor[rotIndex].rotorMap[j][3] == encMsg[i])
-	{
-	  cout << "THIS IS J:" << j << endl;
-	  rotor[rotIndex].mvPos();
-	  encMsg[i] = rotor[rotIndex].rotorMap[mod(j+1,26)][0];
-	  cout << "PRINTING THE ROTOR ARRAY" << endl;
-	  for(int i= 0; i < 26; i++)
-	    {
-	      for(int j = 0; j < 4; j++)
-		cout << rotor[0].rotorMap[i][j] << " ";
-	      cout << endl;
-	    }
-	  cout << "FINISHED PRINTING THE ROTOR ARRAY" << endl;
-	  break;
-	}
-    }
-
-  for(int i = 0; i < msgCount; i++)
-    cout << encMsg[i] << " ";
-  cout << endl;  
-    */
 
   
-      /*
-  if(nrOfRotors >0)
-    {
-      for(int rotIndex = 0; rotIndex < nrOfRotors; rotIndex++)
-	{
-	  // set the starting position for one rotor
-	  rotor[rotIndex].setStartPos(position.getStartPos(rotIndex));
-	}
-      for(int i = 0; i < msgCount; i++)
-	{
-	  int rotIndex = 0;
-	  while(rotIndex < nrOfRotors)
-	    {
-	      if(rotIndex == 0)
-		{
-		  for(int j = 0; j < 26; j++)
-		    {
-		      if(rotor[rotIndex].rotorMap[j][3] == encMsg[i])
-			{
-			  rotor[rotIndex].mvPos();
-			  encMsg[i] = rotor[rotIndex].rotorMap[j][0];
-			  cout << "PRINTING THE ROTOR ARRAY" << endl;
-			  for(int i= 0; i < 26; i++)
-			    {
-			      for(int j = 0; j < 4; j++)
-				cout << rotor[0].rotorMap[i][j] << " ";
-			      cout << endl;
-			    }
-
-
-			  cout << "FINISHED PRINTING THE ROTOR ARRAY" << endl;
-
-			}
-		    }
-		}
-	      else
-		{
-		  if(notchesAlignment(rotor, rotIndex))
-		    {
-		      rotor[rotIndex].mvPos();
-		      for(int j = 0; j < 26; j++)
-			encMsg[i] = rotor[rotIndex].rotorMap[j][0];
-		    }
-		}
-	      
-
-	      if (rotIndex < nrOfRotors -1)
-		{
-		  for(int j = 0; j < 26; j++)
-		    if(rotor[rotIndex].rotorMap[encMsg[i]][0] == rotor[rotIndex+1].rotorMap[j][3])
-		      {
-			encMsg[i] = rotor[rotIndex+1].rotorMap[j][1];
-		      }
-		    else
-		      {
-			cout << "COULDN'T FIND A MATCH IN THE OTHER ROTOR" << endl;
-			exit(5);
-		      }
-		}
-	      rotIndex++;
-	    }
-	  //cout << encMsg[i] << endl;
-    	}
-    }
-      */
-  //check output after rotors operation
-  for(int i = 0; i < msgCount; i++)
-    {
-      char c = encMsg[i] + 'A';
-      cout << c << " ";
-    }
-  cout << endl;  
-
- 
-    //Rotor Rotors[3];
-  //Rotors(1, "rotors/I.pos");
-
-  //Rotor rotor[3]{};
-  //Rotor rotor[3];
-
-  //rotor[0].initialize(1, "rotors/letters.rot");
-
-   
-  /*
-  for(int i = 0; i < 13; i++)
-    {
-      cout << plugboard.getIthInput(i) << endl;
-      cout << plugboard.getIthOutput(i) << endl;
-      
-      cout << endl;
-    }
-   
-    //Position two("rotors/letters.pos", 3);
-    */
- 
  return 0;
 }
 
