@@ -19,7 +19,8 @@ Enigma::Enigma(int argc, char** argv)
   if(argc < 4)
     {
       err = INSUFFICIENT_NUMBER_OF_PARAMETERS;
-      cerr << "usage: enigma plugboard-file reflector-file (<rotor-file>)* rotor-positions";
+      cerr << "usage: enigma plugboard-file reflector-file (<rotor-file>)* rotor-positions"
+	   << endl;
     }
   
   //PLUGBOARD

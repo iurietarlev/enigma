@@ -17,13 +17,9 @@ Reflector::Reflector(const char* rfFname)
   
   if(err == NON_NUMERIC_CHARACTER)
     {
-      cerr << "Non-numeric character for reflector file "
+      cerr << "Non-numeric character in reflector file "
 	   << rfFname << endl;
-    }
-
-
-
-  
+    }  
   if(err == NO_ERROR)
     {
       if(!isInRange(originalArray, originalArrayLength))
@@ -31,6 +27,13 @@ Reflector::Reflector(const char* rfFname)
 	  err = INVALID_INDEX;
 	  cerr << "Out of range character in reflector file: " << rfFname
 	       << endl;
+	}
+
+      else if (originalArrayLength < 26)
+	{
+	  err = INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
+	  cerr << "Insufficient number of mappings "
+	       << "in reflector file: " << rfFname << endl;
 	}
       
       else if (originalArrayLength != 26)

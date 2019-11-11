@@ -22,7 +22,7 @@ Rotor::Rotor(const char *rotor_fname){
       if(actualArrayLength < 26)
 	{
 	  err = INVALID_ROTOR_MAPPING;
-	  cerr << "Not all inputs are mapped in rotor file: "
+	  cerr << "Not all inputs mapped in rotor file: "
 	       << rotor_fname << endl;
 	}
             
