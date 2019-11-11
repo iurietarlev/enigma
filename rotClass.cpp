@@ -96,12 +96,12 @@ bool Rotor::isCurtPosNotch()
 }
 
 //Rotor destructor
-Rotor::~Rotor(){
-  delete[] notchPos;
-  // cout << "Notch Array has died" << endl;
+Rotor::~Rotor()
+{
+  if(err == 0)
+    delete[] notchPos;
 };
 
 
-int Rotor::getErr(){
-  return err;
-}
+int Rotor::getErr()
+{return err;};

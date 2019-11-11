@@ -2,16 +2,29 @@
 
 Enigma::Enigma(int argc, char** argv)
 {
+  pb = NULL;
+  rf = NULL;
+  pos = NULL;
+  
+  nrOfRotors = argc-4; 
+  if(nrOfRotors < 1)
+    rot = new Rotor*[1];
+  else
+    rot = new Rotor*[nrOfRotors];
+  
+  
+  
+ 
   err = NO_ERROR;
   if(argc < 4)
-    err = INSUFFICIENT_NUMBER_OF_PARAMETERS;
-  
-  //set nr of rotors
-  nrOfRotors = argc-4;
+    err = INSUFFICIENT_NUMBER_OF_PARAMETERS; 
   
   //PLUGBOARD
-  pb = new Plugboard(argv[1]);
-  err = pb->getErr();
+  if(err == NO_ERROR)
+    {
+      pb = new Plugboard(argv[1]);
+      err = pb->getErr(); 
+    }
   
   //REFLECTOR
   if(err == NO_ERROR)
@@ -19,12 +32,13 @@ Enigma::Enigma(int argc, char** argv)
       rf = new Reflector(argv[2]);
       err = rf->getErr();
     }
+
   
   //ROTORS
-  if(err == NO_ERROR)
+  if(err == NO_ERROR && nrOfRotors > 0)
     {
       nrOfRotors = argc-4;
-      rot = new Rotor*[nrOfRotors];
+
       for(int i = 3; i < argc - 1; i++)
 	{
 	  rot[i-3] = new Rotor(argv[i]);
@@ -113,10 +127,11 @@ Enigma::~Enigma(){
   delete pos;
 
   if(nrOfRotors > 0)
-    for(int i = 0; i < nrOfRotors; i++)
-      delete rot[i];
-  
-  delete rot;
+    {
+      for(int i = 0; i < nrOfRotors; i++)
+	delete rot[i];
+    }
+  delete[] rot;
 };
    
     

@@ -15,18 +15,33 @@ Plugboard::Plugboard(const char* pbFname)
 
   //check if more than 13 pairs
   if(err == NO_ERROR){
-    if (arrayLength > 26)
-      err = IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
-
+    if(err == NON_NUMERIC_CHARACTER)
+      {
+	cout << "Non-numeric character in plugboard file "
+	     << pbFname << endl;
+      }    
     else if(!isInRange(originalArray, arrayLength))
-      err = INVALID_INDEX; 
-  
-    else if(is_duplicate(originalArray, arrayLength))    
-      err = IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
-
+      {
+	err = INVALID_INDEX;
+	cout << "Out of range Character in file " << pbFname
+	     << endl;
+      }
+    else if (arrayLength > 26)
+      {
+	err = IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
+	cout << "Incorrect number of parameters in plugboard file "
+	     << pbFname << endl;
+      }
+    else if(is_duplicate(originalArray, arrayLength))
+      {
+	err = IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
+      }
     else if (arrayLength%2 != 0)
-      err = INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
- 
+      {
+	err = INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
+	cout << "Incorrect number of parameters in plugboard file "
+	     << pbFname << endl;
+      }
     else
       {
 	err = NO_ERROR;
@@ -67,6 +82,7 @@ void Plugboard::encode(int& encLetter)
 
 
 Plugboard::~Plugboard(){
-  delete[] pbMap;
+  if(err == NO_ERROR)
+    delete[] pbMap;
   //cout << "Plugboard has died" << endl;
 }

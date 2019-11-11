@@ -8,12 +8,13 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
+  //cout << argc << endl;
   Enigma enigma(argc, argv);
   int err = enigma.getErr();
   
   switch(err){
-  case(INVALID_INPUT_CHARACTER):
-    return INVALID_INPUT_CHARACTER;
+  case(INSUFFICIENT_NUMBER_OF_PARAMETERS):
+    return INSUFFICIENT_NUMBER_OF_PARAMETERS;
     break;
   case(INVALID_INDEX):
     return INVALID_INDEX;
@@ -47,7 +48,7 @@ int main(int argc, char** argv)
   
   char msg[80];
   
-  cout << "Enter your message:" << endl;
+  //cout << "Enter your message:" << endl;
   cin.getline(msg, 80);
   
   char encMsg[strlen(msg)];
@@ -58,7 +59,7 @@ int main(int argc, char** argv)
     {
       if(!isspace(msg[i]) && !isupper(msg[i]))
 	{
-	  cout << msg[i] << "is not a valid input"
+	  cout << msg[i] << " is not a valid input"
 	       << "character (input characters must"
 	       << "be upper case letters A-Z)!" << endl;
 	  return INVALID_INPUT_CHARACTER;
@@ -71,19 +72,10 @@ int main(int argc, char** argv)
 	}
       i++;
     }
-
-  /*
-  //print original message
-  for(int i = 0; i < msgCount; i++)
-    cout << encMsg[i];
-  cout << endl;
-  */
   
   // ENCRYPTION
   for(int i = 0; i < msgCount; i++)
-    enigma.encrypt(encMsg[i]);
-      
-   
+    enigma.encrypt(encMsg[i]);   
   
   
   //print encrypted message

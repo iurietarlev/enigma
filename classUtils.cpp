@@ -46,7 +46,9 @@ int createArray(const char* filename, int* array, int& arrayLength)
   while(!inStream.eof())
     {
       if (!isdigit(peek))
-	return NON_NUMERIC_CHARACTER;
+	{
+	  return NON_NUMERIC_CHARACTER;
+	}
       
       inStream >> temp; // store the number in temp variable
       inStream >> ws; // eat up any leading white sp
