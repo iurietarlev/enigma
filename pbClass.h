@@ -2,20 +2,18 @@
 #define PLGBRD_CLASS
 
 
-class Pb
+class Plugboard
 {
  public:
-  Pb(const char* pbFname);
-
-  int* getMap();
-  int getLength();
-  ~Pb();
+  Plugboard(const char* pbFname);
+  void encode(int& encLetter);
+  int getErr();
+  ~Plugboard();
   
  private:
   int* pbMap;
   int arrayLength;
-  //int input[13];
-  //int output[13];
+  int err;
 };
 
 #endif

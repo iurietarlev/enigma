@@ -5,12 +5,13 @@ class Reflector
 {
  public:
   Reflector(const char* rfFname);
-  int* getMap();
-  int getLength();
+  void encode(int &encLetter);
+  int getErr();
   
  private:
   int rfMap[26];
   int arrayLength = 26;
+  int err;
 };
 
 #endif

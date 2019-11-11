@@ -8,47 +8,52 @@ using namespace std;
 /* ============== PLUGBOARD CONSTRUCTOR ============== */
 Reflector::Reflector(const char* rfFname)
 {
-  int originalArray[80];
+  int originalArray[1024];
   int originalArrayLength;
-  createArray(rfFname, originalArray, originalArrayLength);
-
-
+  
+  err = NO_ERROR; //start with NO_ERROR
+  err = createArray(rfFname, originalArray, originalArrayLength);
+  
   // check if length is exactly 26
-  if (originalArrayLength != 26)
+  if(err == NO_ERROR)
     {
-      cout << "There needs to be exactly 13 pairs of numbers for the reflector."
-	   << endl;
-      exit(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
-    }
+      if (originalArrayLength != 26)
+	err = INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
+      
+      else if(!isInRange(originalArray, originalArrayLength))
+	err = INVALID_INDEX; 
+      
+      else if(is_duplicate(originalArray, originalArrayLength))
+	err = INVALID_REFLECTOR_MAPPING;
 
-  //check if the values are within the range (0 to 25)
-  bool goodRange = rangeOk(originalArray, originalArrayLength);
-  if (!goodRange)
-    {
-      cout << "At least one of the input numbers for the reflector is out of range." << endl;
-      exit(INVALID_INDEX); 
-    }
-  
-  //check for duplicates
-  bool duplicate = duplicates(originalArray, originalArrayLength);
-  if (duplicate)
-    {
-      cout << "One of the inputs of reflector seems to be mapped to itself or mapped twice."  << endl;
-      exit(INVALID_REFLECTOR_MAPPING);
-    }
-  
-  for(int i = 0; i < originalArrayLength; i++)
-    rfMap[i] = originalArray[i];
-
+      else
+	{
+	  err = NO_ERROR;
+	  for(int i = 0; i < originalArrayLength; i++)
+	    rfMap[i] = originalArray[i];
+	}
+    } 
 };
-  
-int Reflector::getLength()
+ 
+void Reflector::encode(int& encLetter)
 {
-  return arrayLength;
-};
-
-
-int* Reflector::getMap()
-{
-  return rfMap;
+  for(int j = 0; j < arrayLength; j++)
+    if (encLetter == rfMap[j])
+      {
+	if(j%2 == 0)
+	  {
+	    encLetter = rfMap[j+1];
+	    break;
+	  }
+	else
+	  {
+	    encLetter = rfMap[j-1];
+	    break;
+	  }
+      }
 }
+
+int Reflector::getErr()
+{
+  return err;
+};

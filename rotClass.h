@@ -4,34 +4,27 @@
 class Rotor
 {
  public:
-  Rotor(); 
-  void initialize(int rotorNr, const char rotor_fname[]);
+  Rotor(const char *rotor_fname); 
+  ~Rotor();
+  
   void setStartPos(int startPos);
-  int getStartPos(int rotIndex);
   void mvPos();
   int getCurtPos();
-  int getCurtPosVal();
-  int getNotchPos(int i);
-  int getNrOfNotches();
-  int getPosOfVal(int val);
-  ~Rotor();
-  int rotorMap[26][4];
+  int getErr();
+  bool isCurtPosNotch();
 
-  int getLeftMostVal(int rightMostVal);
-  int getRightMostVal(int leftMostVal);
+  int rotorMap[26][2];
+
+  void encodeFwd(int& encLetter);
+  void encodeBwd(int& encLetter);
 
  private:
-  int rotorNr;    
-  //  int rotorMap[26][4];
-
+  int err;   
   int nrOfNotches;
   int* notchPos; 
-  int startPos;
   int curtPos;
-  int curtPosVal;
-  
 
-  int expectedArrayLength;
+  //int expectedArrayLength;
 };
 
 #endif

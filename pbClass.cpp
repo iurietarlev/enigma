@@ -6,67 +6,67 @@
 using namespace std;
 
 /* ============== PLUGBOARD CONSTRUCTOR ============== */
-Pb::Pb(const char* pbFname)
+Plugboard::Plugboard(const char* pbFname)
 {
-  int originalArray[80];
-  int originalArrayLength;
-  createArray(pbFname, originalArray, originalArrayLength);
+  int originalArray[1024];
 
+  err = NO_ERROR;
+  err = createArray(pbFname, originalArray, arrayLength);
 
-  // if length is 
-  if (originalArrayLength > 26)
-    {
-      cout << "There can only be a maximum of 13 pairs of numbers for plugboard."
-	   << endl;
-      exit(IMPOSSIBLE_PLUGBOARD_CONFIGURATION);
-    }
+  //check if more than 13 pairs
+  if(err == NO_ERROR){
+    if (arrayLength > 26)
+      err = IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
+
+    else if(!isInRange(originalArray, arrayLength))
+      err = INVALID_INDEX; 
   
-  bool goodRange = rangeOk(originalArray, originalArrayLength);
-  if (!goodRange)
-    {
-      cout << "At least one of the input parameters for plugboard mapping is out of range." << endl;
-      exit(INVALID_INDEX); 
-    }
-  
-  //check for duplicates
-  bool duplicate = duplicates(originalArray, originalArrayLength);
-  if (duplicate)
-    {
-      cout << "One of the inputs in plugboard seems to be mapped to itself or mapped twice."  << endl;
-      exit(IMPOSSIBLE_PLUGBOARD_CONFIGURATION);
-    }
+    else if(is_duplicate(originalArray, arrayLength))    
+      err = IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
 
-  // check for odd number of numbers
-  if (originalArrayLength%2 != 0)
-    {
-      cout << "Incorrect number of plugboard parameters" << endl;
-      exit(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
-    }
+    else if (arrayLength%2 != 0)
+      err = INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
+ 
+    else
+      {
+	err = NO_ERROR;
+      
+	pbMap = new int[arrayLength]; 
 
-  //length of input array and output array
-  arrayLength = originalArrayLength;//2;
-
-  pbMap = new int[originalArrayLength]; 
-
-  for(int i = 0; i < originalArrayLength; i++)
-    pbMap[i] = originalArray[i];
-
-  };
-
-
-/* ============== GET NR OF VALUES TO BE MAPPED ============== */
-int Pb::getLength()
-{
-  return arrayLength;
+	for(int i = 0; i < arrayLength; i++)
+	  pbMap[i] = originalArray[i];
+      }
+  }
 };
 
 
-int* Pb::getMap()
+/* ============== GET NR OF VALUES TO BE MAPPED ============== */
+int Plugboard::getErr()
 {
-  return pbMap;
-}
+  return err;
+};
   
-Pb::~Pb(){
+
+void Plugboard::encode(int& encLetter)
+{
+  for(int j = 0; j < arrayLength; j++)
+    if (encLetter == pbMap[j])
+      {
+	if(j%2 == 0)
+	  {
+	    encLetter = pbMap[j+1];
+	    break;
+	  }
+	else
+	  {
+	    encLetter = pbMap[j-1];
+	    break;
+	  }
+      }
+}
+
+
+Plugboard::~Plugboard(){
   delete[] pbMap;
-  cout << "Plugboard has died" << endl;
+  //cout << "Plugboard has died" << endl;
 }
