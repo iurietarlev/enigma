@@ -8,7 +8,6 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-  //cout << argc << endl;
   Enigma enigma(argc, argv);
   int err = enigma.getErr();
   
@@ -46,10 +45,9 @@ int main(int argc, char** argv)
     break;
   }
   
-  char msg[80];
+  char msg[512];
   
-  //cout << "Enter your message:" << endl;
-  cin.getline(msg, 80);
+  cin.getline(msg, 512);
   
   char encMsg[strlen(msg)];
   
@@ -75,8 +73,6 @@ int main(int argc, char** argv)
 	}
       i++;
     }
-
-  //cout << endl;
   
   return NO_ERROR;
 }

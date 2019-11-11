@@ -56,5 +56,6 @@ int Position:: getErr()
 Position::~Position()
 {
   //cout << "Position class has died" << endl;
-  delete[] array;
+  if(err == NO_ERROR)
+    delete[] array;
 }
