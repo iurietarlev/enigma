@@ -17,15 +17,40 @@ Reflector::Reflector(const char* rfFname)
   // check if length is exactly 26
   if(err == NO_ERROR)
     {
-      if (originalArrayLength != 26)
-	err = INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
-      
+      if(err == NON_NUMERIC_CHARACTER)
+	{
+	  cerr << "Non-numeric character for reflector file "
+	       << rfFname << endl;
+	}
+
       else if(!isInRange(originalArray, originalArrayLength))
-	err = INVALID_INDEX; 
+	{
+	  err = INVALID_INDEX;
+	  cerr << "Out of range character in rotor file: " << rfFname
+	       << endl;
+	}
+      
+      else if (originalArrayLength < 26)
+	{
+	  err = INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
+	  cerr << "Insufficient number of mappings "
+	       << "in reflector file: " << rfFname << endl;
+	}
+
+      else if (originalArrayLength > 26)
+	{
+	  err = INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
+	  cerr << "Incorrect (odd) number of parameters "
+	       << "in reflector file " << rfFname << endl;
+	}
       
       else if(is_duplicate(originalArray, originalArrayLength))
-	err = INVALID_REFLECTOR_MAPPING;
-
+	{
+	  err = INVALID_REFLECTOR_MAPPING;
+	  cerr << "Mapping in rotor file: " << rfFname
+	       << "contains duplicates" << endl;
+	}
+      
       else
 	{
 	  err = NO_ERROR;

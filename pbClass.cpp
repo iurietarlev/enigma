@@ -17,19 +17,19 @@ Plugboard::Plugboard(const char* pbFname)
   if(err == NO_ERROR){
     if(err == NON_NUMERIC_CHARACTER)
       {
-	cout << "Non-numeric character in plugboard file "
+	cerr << "Non-numeric character in plugboard file "
 	     << pbFname << endl;
       }    
     else if(!isInRange(originalArray, arrayLength))
       {
 	err = INVALID_INDEX;
-	cout << "Out of range Character in plugboard file " << pbFname
+	cerr << "Out of range Character in plugboard file " << pbFname
 	     << endl;
       }
     else if (arrayLength > 26)
       {
 	err = IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
-	cout << "Incorrect number of parameters in plugboard file "
+	cerr << "Incorrect number of parameters in plugboard file "
 	     << pbFname << endl;
       }
     else if(is_duplicate(originalArray, arrayLength))
@@ -39,7 +39,7 @@ Plugboard::Plugboard(const char* pbFname)
     else if (arrayLength%2 != 0)
       {
 	err = INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
-	cout << "Incorrect number of parameters in plugboard file "
+	cerr << "Incorrect number of parameters in plugboard file "
 	     << pbFname << endl;
       }
     else

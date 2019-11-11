@@ -16,28 +16,28 @@ Rotor::Rotor(const char *rotor_fname){
       
       if(err == NON_NUMERIC_CHARACTER)
 	{
-	  cout << "Non-numeric character for mapping in rotor file "
+	  cerr << "Non-numeric character for mapping in rotor file "
 	       << rotor_fname << endl;
 	}
     
       else if(actualArrayLength < 26)
 	{
 	  err = INVALID_ROTOR_MAPPING;
-	  cout << "Not all inputs are mapped in rotor file: "
+	  cerr << "Not all inputs are mapped in rotor file: "
 	       << rotor_fname << endl;
 	}
             
       else if (!isInRange(originalRotorArray, actualArrayLength))
 	{
 	  err = INVALID_INDEX;
-	  cout << "Out of range character in rotor file: " << rotor_fname
+	  cerr << "Out of range character in rotor file: " << rotor_fname
 	       << endl;
 	}
 
       else if (is_duplicate(originalRotorArray, 26))
 	{
 	  err = INVALID_ROTOR_MAPPING;
-	  cout << "Mapping in rotor file: " << rotor_fname
+	  cerr << "Mapping in rotor file: " << rotor_fname
 	       << "contains duplicates" << endl;
 	}
       else
