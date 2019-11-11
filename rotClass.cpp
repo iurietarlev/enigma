@@ -110,7 +110,7 @@ bool Rotor::isCurtPosNotch()
 //Rotor destructor
 Rotor::~Rotor()
 {
-  if(err == 0)
+  if(err == NO_ERROR)
     delete[] notchPos;
 };
 
