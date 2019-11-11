@@ -13,20 +13,37 @@ Rotor::Rotor(const char *rotor_fname){
   err = createArray(rotor_fname, originalRotorArray, actualArrayLength); 
   if(err==0)
     {
-      if(actualArrayLength < 27)
-	err = INVALID_ROTOR_MAPPING;
       
+      if(err == NON_NUMERIC_CHARACTER)
+	{
+	  cout << "Non-numeric character for mapping in rotor file "
+	       << rotor_fname << endl;
+	}
+    
+      else if(actualArrayLength < 26)
+	{
+	  err = INVALID_ROTOR_MAPPING;
+	  cout << "Not all inputs are mapped in rotor file: "
+	       << rotor_fname << endl;
+	}
+            
       else if (!isInRange(originalRotorArray, actualArrayLength))
-	err = INVALID_INDEX;
+	{
+	  err = INVALID_INDEX;
+	  cout << "Out of range character in rotor file: " << rotor_fname
+	       << endl;
+	}
 
       else if (is_duplicate(originalRotorArray, 26))
-	err = INVALID_ROTOR_MAPPING;
+	{
+	  err = INVALID_ROTOR_MAPPING;
+	  cout << "Mapping in rotor file: " << rotor_fname
+	       << "contains duplicates" << endl;
+	}
       else
 	{
 	  err = NO_ERROR;
  
-
-	  //assign first 26 values from the rotorArray into the rotorMap
 	  for(int i = 0; i < 26; i++)
 	    {
 	      rotorMap[i][1] = i; //values to be mapped
@@ -35,12 +52,8 @@ Rotor::Rotor(const char *rotor_fname){
 
 	  
 	  nrOfNotches = actualArrayLength - 26;
-
-	  //overwrite default notch array with the actual number of notches
 	  notchPos = new int[nrOfNotches];
 
-	  //cout << "Number of Notches = " << nrOfNotches << endl;
-	  //cout << "26th index of originalRotorArray = " << originalRotorArray[26] << endl;
 	  for(int i = 0; i < nrOfNotches; i++)
 	    {
 	      notchPos[i] = originalRotorArray[26+i];

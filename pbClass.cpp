@@ -23,7 +23,7 @@ Plugboard::Plugboard(const char* pbFname)
     else if(!isInRange(originalArray, arrayLength))
       {
 	err = INVALID_INDEX;
-	cout << "Out of range Character in file " << pbFname
+	cout << "Out of range Character in plugboard file " << pbFname
 	     << endl;
       }
     else if (arrayLength > 26)

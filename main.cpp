@@ -59,6 +59,7 @@ int main(int argc, char** argv)
     {
       if(!isspace(msg[i]) && !isupper(msg[i]))
 	{
+	  cout << endl;
 	  cout << msg[i] << " is not a valid input"
 	       << "character (input characters must"
 	       << "be upper case letters A-Z)!" << endl;
@@ -68,21 +69,14 @@ int main(int argc, char** argv)
       if(isupper(msg[i]))
 	{
 	  encMsg[msgCount] = msg[i];
-	  msgCount++;
+	  enigma.encrypt(encMsg[msgCount]);   
+	  cout << encMsg[msgCount];  
+	  msgCount++;   
 	}
       i++;
     }
-  
-  // ENCRYPTION
-  for(int i = 0; i < msgCount; i++)
-    enigma.encrypt(encMsg[i]);   
-  
-  
-  //print encrypted message
-  for(int i = 0; i < msgCount; i++)
-    cout << encMsg[i];
+
   cout << endl;
-  
   
   return NO_ERROR;
 }
