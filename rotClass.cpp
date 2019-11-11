@@ -10,17 +10,16 @@ Rotor::Rotor(const char *rotor_fname){
   int originalRotorArray[1024];
   int actualArrayLength;
   
-  err = createArray(rotor_fname, originalRotorArray, actualArrayLength); 
-  if(err==0)
+  err = createArray(rotor_fname, originalRotorArray, actualArrayLength);
+  if(err == NON_NUMERIC_CHARACTER)
     {
-      
-      if(err == NON_NUMERIC_CHARACTER)
-	{
-	  cerr << "Non-numeric character for mapping in rotor file "
-	       << rotor_fname << endl;
-	}
-    
-      else if(actualArrayLength < 26)
+      cerr << "Non-numeric character for mapping in rotor file "
+	   << rotor_fname << endl;
+    }
+  
+  if(err==0)
+    {   
+      if(actualArrayLength < 26)
 	{
 	  err = INVALID_ROTOR_MAPPING;
 	  cerr << "Not all inputs are mapped in rotor file: "
@@ -38,7 +37,7 @@ Rotor::Rotor(const char *rotor_fname){
 	{
 	  err = INVALID_ROTOR_MAPPING;
 	  cerr << "Mapping in rotor file: " << rotor_fname
-	       << "contains duplicates" << endl;
+	       << " contains duplicates" << endl;
 	}
       else
 	{

@@ -12,25 +12,26 @@ Position::Position(const char positionFname[], int expectedArrayLength)
   err = NO_ERROR;
   err = createArray(positionFname, positionArray, actualArrayLength); 
 
+  if(err == NON_NUMERIC_CHARACTER)
+    {
+      cerr << "Non-numeric character in rotor positions file "
+	   << positionFname << endl;
+    }    
+
   
   if(err == NO_ERROR)
     {
-      if(err == NON_NUMERIC_CHARACTER)
-	{
-	  cout << "Non-numeric character in rotor positions file "
-	       << positionFname << endl;
-	}    
-      else if (!isInRange(positionArray, actualArrayLength))
+      if (!isInRange(positionArray, actualArrayLength))
 	{
 	  err = INVALID_INDEX;
-	  cout << "Out of range character in plugboard positions file "
+	  cerr << "Out of range character in plugboard positions file "
 	       << positionFname << endl;
 	}
       else if(actualArrayLength < expectedArrayLength)
 	{
 	  err = NO_ROTOR_STARTING_POSITION;
-	  cout << "No starting position for rotor" 
-	       << actualArrayLength + 1 << " in rotor position file "
+	  cerr << "No starting position for rotor " 
+	       << actualArrayLength << " in rotor position file: "
 	       << positionFname << endl;
 	}
       else

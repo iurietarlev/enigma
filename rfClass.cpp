@@ -13,31 +13,27 @@ Reflector::Reflector(const char* rfFname)
   
   err = NO_ERROR; //start with NO_ERROR
   err = createArray(rfFname, originalArray, originalArrayLength);
+
   
-  // check if length is exactly 26
+  if(err == NON_NUMERIC_CHARACTER)
+    {
+      cerr << "Non-numeric character for reflector file "
+	   << rfFname << endl;
+    }
+
+
+
+  
   if(err == NO_ERROR)
     {
-      if(err == NON_NUMERIC_CHARACTER)
-	{
-	  cerr << "Non-numeric character for reflector file "
-	       << rfFname << endl;
-	}
-
-      else if(!isInRange(originalArray, originalArrayLength))
+      if(!isInRange(originalArray, originalArrayLength))
 	{
 	  err = INVALID_INDEX;
-	  cerr << "Out of range character in rotor file: " << rfFname
+	  cerr << "Out of range character in reflector file: " << rfFname
 	       << endl;
 	}
       
-      else if (originalArrayLength < 26)
-	{
-	  err = INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
-	  cerr << "Insufficient number of mappings "
-	       << "in reflector file: " << rfFname << endl;
-	}
-
-      else if (originalArrayLength > 26)
+      else if (originalArrayLength != 26)
 	{
 	  err = INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
 	  cerr << "Incorrect (odd) number of parameters "

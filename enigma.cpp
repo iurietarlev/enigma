@@ -17,7 +17,10 @@ Enigma::Enigma(int argc, char** argv)
  
   err = NO_ERROR;
   if(argc < 4)
-    err = INSUFFICIENT_NUMBER_OF_PARAMETERS; 
+    {
+      err = INSUFFICIENT_NUMBER_OF_PARAMETERS;
+      cerr << "usage: enigma plugboard-file reflector-file (<rotor-file>)* rotor-positions";
+    }
   
   //PLUGBOARD
   if(err == NO_ERROR)
