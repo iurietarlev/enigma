@@ -29,12 +29,19 @@ Reflector::Reflector(const char* rfFname)
 	       << endl;
 	}
 
-      else if (originalArrayLength < 26)
+      else if (originalArrayLength < 26 && originalArrayLength%2 != 0)
+	{
+	  err = INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
+	  cerr << "Incorrect (odd) number of parameters "
+	       << "in reflector file " << rfFname << endl;
+	}
+
+      else if (originalArrayLength < 26 && originalArrayLength%2 == 0)
 	{
 	  err = INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
 	  cerr << "Insufficient number of mappings "
 	       << "in reflector file: " << rfFname << endl;
-	}
+	}      
       
       else if (originalArrayLength != 26)
 	{
