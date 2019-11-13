@@ -57,7 +57,6 @@ int main(int argc, char** argv)
     {
       if(!isspace(msg[i]) && !isupper(msg[i]))
 	{
-	  cerr << endl;
 	  cerr << msg[i] << " is not a valid input "
 	       << "character (input characters must"
 	       << "be upper case letters A-Z)!" << endl;
