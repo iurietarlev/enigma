@@ -25,39 +25,43 @@ Rotor::Rotor(const char *rotor_fname){
 	  cerr << "Not all inputs mapped in rotor file: "
 	       << rotor_fname << endl;
 	}
-            
+      
       else if (!isInRange(originalRotorArray, actualArrayLength))
 	{
 	  err = INVALID_INDEX;
 	  cerr << "Out of range character in rotor file: " << rotor_fname
 	       << endl;
 	}
-
-      else if (is_duplicate(originalRotorArray, 26))
-	{
-	  err = INVALID_ROTOR_MAPPING;
-	  cerr << "Mapping in rotor file: " << rotor_fname
-	       << " contains duplicates" << endl;
-	}
+      
       else
 	{
-	  err = NO_ERROR;
- 
 	  for(int i = 0; i < 26; i++)
 	    {
 	      rotorMap[i][1] = i; //values to be mapped
 	      rotorMap[i][0] = originalRotorArray[i]; //mappedValues
 	    }
-
 	  
+	  for(int i = 1; i < 26; i++)
+	    for(int j = 0; j < i; j++)
+	      if(rotorMap[i][0] == rotorMap[j][0])
+		{
+		  err = INVALID_ROTOR_MAPPING;
+		  cerr << "Invalid mapping of input " << rotorMap[i][1] << " to output "
+		       << rotorMap[i][0] << " (output "
+		       << rotorMap[i][0] <<  " is already mapped to from input "
+		       << rotorMap[j][1] << ") in rotor file: "
+		       << rotor_fname << endl;
+		  break;
+		}
+	}
+      
+      if(err == NO_ERROR)
+	{
 	  nrOfNotches = actualArrayLength - 26;
 	  notchPos = new int[nrOfNotches];
-
+	  
 	  for(int i = 0; i < nrOfNotches; i++)
-	    {
-	      notchPos[i] = originalRotorArray[26+i];
-	      //cout <<  notchPos[i] << endl;
-	    }
+	    notchPos[i] = originalRotorArray[26+i];
 	}
     }
 };
