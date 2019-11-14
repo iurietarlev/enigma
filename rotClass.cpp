@@ -1,16 +1,18 @@
-#include"errors.h"
 #include"rotClass.h"
-#include<iostream>
-
-#include"classUtils.h"
-
 using namespace std;
 
+
+/* ====== CONSTRUCTOR & DESCTRUCTOR ====== */
+
 Rotor::Rotor(const char *rotor_fname){
-  int originalRotorArray[1024];
+  int originalArray[1024];
   int actualArrayLength;
   
-  err = createArray(rotor_fname, originalRotorArray, actualArrayLength);
+  err = createArray(rotor_fname, originalArray, actualArrayLength);
+
+  if(err == ERROR_OPENING_CONFIGURATION_FILE)
+    cerrCantOpenFile(rotor_fname);
+  
   if(err == NON_NUMERIC_CHARACTER)
     {
       cerr << "Non-numeric character for mapping in rotor file "
@@ -26,29 +28,33 @@ Rotor::Rotor(const char *rotor_fname){
 	       << rotor_fname << endl;
 	}
       
-      else if (!isInRange(originalRotorArray, actualArrayLength))
+      else if (!isInRange(originalArray, actualArrayLength))
 	{
 	  err = INVALID_INDEX;
 	  cerr << "Out of range character in rotor file: " << rotor_fname
 	       << endl;
 	}
       
-      else
+      else 
 	{
+	  
 	  for(int i = 0; i < 26; i++)
 	    {
 	      rotorMap[i][1] = i; //values to be mapped
-	      rotorMap[i][0] = originalRotorArray[i]; //mappedValues
+	      rotorMap[i][0] = originalArray[i]; //mappedValues
 	    }
-	  
+
+	  //check for duplicates
 	  for(int i = 1; i < 26; i++)
 	    for(int j = 0; j < i; j++)
 	      if(rotorMap[i][0] == rotorMap[j][0])
 		{
 		  err = INVALID_ROTOR_MAPPING;
-		  cerr << "Invalid mapping of input " << rotorMap[i][1] << " to output "
+		  cerr << "Invalid mapping of input "
+		       << rotorMap[i][1] << " to output "
 		       << rotorMap[i][0] << " (output "
-		       << rotorMap[i][0] <<  " is already mapped to from input "
+		       << rotorMap[i][0]
+		       << " is already mapped to from input "
 		       << rotorMap[j][1] << ") in rotor file: "
 		       << rotor_fname << endl;
 		  break;
@@ -61,26 +67,40 @@ Rotor::Rotor(const char *rotor_fname){
 	  notchPos = new int[nrOfNotches];
 	  
 	  for(int i = 0; i < nrOfNotches; i++)
-	    notchPos[i] = originalRotorArray[26+i];
+	    notchPos[i] = originalArray[26+i];
 	}
     }
 };
 
 
-void Rotor::setStartPos(int startPos)
+Rotor::~Rotor()
 {
-  curtPos = startPos; 
-};
+  if(err == NO_ERROR)
+    delete[] notchPos;
+}
+
+/* =============== FUNCTIONS ================ */
+
+void Rotor::setStartPos(int startPos)
+{curtPos = startPos;}
 
 
 void Rotor::mvPos()
-{
-  //move current position (12 o'clock position)
-  curtPos = mod26(curtPos+1);
-};
+{curtPos = mod26(curtPos+1);}
 
 int Rotor::getCurtPos()
-{return curtPos;};
+{return curtPos;}
+
+
+bool Rotor::isCurtPosNotch()
+{
+  
+  for(int i = 0 ; i < nrOfNotches; i++)
+    if(curtPos == notchPos[i]) return true;
+  
+  return false;
+}
+
 
 void Rotor::encodeFwd(int &encLetter)
 {
@@ -90,7 +110,8 @@ void Rotor::encodeFwd(int &encLetter)
 	encLetter = rotorMap[i][0];
 	break;
       }
-};
+}
+
 
 void Rotor::encodeBwd(int &encLetter)
 {
@@ -100,24 +121,8 @@ void Rotor::encodeBwd(int &encLetter)
 	encLetter = rotorMap[i][1];
 	break;
       }
-};
-
-bool Rotor::isCurtPosNotch()
-{
-  
-  for(int i = 0 ; i < nrOfNotches; i++)
-    if(curtPos == notchPos[i])
-      return true;
-  return false;
 }
-
-//Rotor destructor
-Rotor::~Rotor()
-{
-  if(err == NO_ERROR)
-    delete[] notchPos;
-};
 
 
 int Rotor::getErr()
-{return err;};
+{return err;}

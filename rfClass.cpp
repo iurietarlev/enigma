@@ -1,32 +1,30 @@
-#include<iostream>
-#include"errors.h"
-#include"classUtils.h"
 #include"rfClass.h"
-
 using namespace std;
 
-/* ============== PLUGBOARD CONSTRUCTOR ============== */
+/* ============ CONSTRUCTOR ============== */
 Reflector::Reflector(const char* rfFname)
 {
   int originalArray[1024];
   int originalArrayLength;
   
-  err = NO_ERROR; //start with NO_ERROR
   err = createArray(rfFname, originalArray, originalArrayLength);
-
+  
+  if(err == ERROR_OPENING_CONFIGURATION_FILE)
+    cerrCantOpenFile(rfFname);  
   
   if(err == NON_NUMERIC_CHARACTER)
     {
       cerr << "Non-numeric character in reflector file "
 	   << rfFname << endl;
     }  
+
   if(err == NO_ERROR)
     {
       if(!isInRange(originalArray, originalArrayLength))
 	{
 	  err = INVALID_INDEX;
-	  cerr << "Out of range character in reflector file: " << rfFname
-	       << endl;
+	  cerr << "Out of range character in reflector file: "
+	       << rfFname << endl;
 	}
 
       else if (originalArrayLength < 26 && originalArrayLength%2 != 0)
@@ -65,7 +63,8 @@ Reflector::Reflector(const char* rfFname)
 	}
     } 
 };
- 
+
+/* =============== FUNCTIONS ================ */
 void Reflector::encode(int& encLetter)
 {
   for(int j = 0; j < arrayLength; j++)
@@ -88,3 +87,4 @@ int Reflector::getErr()
 {
   return err;
 };
+ 

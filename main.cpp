@@ -11,39 +11,40 @@ int main(int argc, char** argv)
   Enigma enigma(argc, argv);
   int err = enigma.getErr();
   
-  switch(err){
-  case(INSUFFICIENT_NUMBER_OF_PARAMETERS):
-    return INSUFFICIENT_NUMBER_OF_PARAMETERS;
-    break;
-  case(INVALID_INDEX):
-    return INVALID_INDEX;
-    break;
-  case(NON_NUMERIC_CHARACTER):
-    return NON_NUMERIC_CHARACTER;
-    break;
-  case(IMPOSSIBLE_PLUGBOARD_CONFIGURATION):
-    return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
-    break;
-  case(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS):
-    return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
-    break;
-  case(INVALID_ROTOR_MAPPING):
-    return INVALID_ROTOR_MAPPING;
-    break;
-  case(NO_ROTOR_STARTING_POSITION):
-    return NO_ROTOR_STARTING_POSITION;
-    break;
-  case(INVALID_REFLECTOR_MAPPING):
-    return INVALID_REFLECTOR_MAPPING;
-    break;
-  case(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS):
-    return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
-    break;
-  case(ERROR_OPENING_CONFIGURATION_FILE):
-    return ERROR_OPENING_CONFIGURATION_FILE;
-  default:
-    break;
-  }
+  switch(err)
+    {
+    case(INSUFFICIENT_NUMBER_OF_PARAMETERS):
+      return INSUFFICIENT_NUMBER_OF_PARAMETERS;
+      break;
+    case(INVALID_INDEX):
+      return INVALID_INDEX;
+      break;
+    case(NON_NUMERIC_CHARACTER):
+      return NON_NUMERIC_CHARACTER;
+      break;
+    case(IMPOSSIBLE_PLUGBOARD_CONFIGURATION):
+      return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
+      break;
+    case(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS):
+      return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
+      break;
+    case(INVALID_ROTOR_MAPPING):
+      return INVALID_ROTOR_MAPPING;
+      break;
+    case(NO_ROTOR_STARTING_POSITION):
+      return NO_ROTOR_STARTING_POSITION;
+      break;
+    case(INVALID_REFLECTOR_MAPPING):
+      return INVALID_REFLECTOR_MAPPING;
+      break;
+    case(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS):
+      return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
+      break;
+    case(ERROR_OPENING_CONFIGURATION_FILE):
+      return ERROR_OPENING_CONFIGURATION_FILE;
+    default:
+      break; 
+    }
   
   char msg[512];
   

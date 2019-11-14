@@ -1,5 +1,7 @@
 #include"enigma.h"
+using namespace std;
 
+/* ====== CONSTRUCTOR & DESCTRUCTOR ====== */
 Enigma::Enigma(int argc, char** argv)
 {
   pb = NULL;
@@ -11,9 +13,6 @@ Enigma::Enigma(int argc, char** argv)
     rot = new Rotor*[1];
   else
     rot = new Rotor*[nrOfRotors];
-  
-  
-  
  
   err = NO_ERROR;
   if(argc < 4)
@@ -65,6 +64,42 @@ Enigma::Enigma(int argc, char** argv)
       rot[rotIndex]->setStartPos(pos->getStartPos(rotIndex));
 }
 
+Enigma::~Enigma(){
+  delete pb;
+  delete rf;
+  delete pos;
+
+  if(nrOfRotors > 0)
+    {
+      for(int i = 0; i < nrOfRotors; i++)
+	delete rot[i];
+    }
+  delete[] rot;
+};
+
+
+/* =============== FUNCTIONS ================ */
+void Enigma::rotateRotors()
+{
+  rot[nrOfRotors-1]->mvPos();
+  
+  if(nrOfRotors > 1)
+    {
+      bool notchesalign = true ;
+      for(int rotIndex = nrOfRotors - 2; rotIndex >= 0; rotIndex--)
+	{
+	  for(int i = rotIndex + 1; i < nrOfRotors; i++)
+	    if(!rot[i]->isCurtPosNotch())
+	      {
+		notchesalign = false;
+		break;
+	      }
+	  if(notchesalign)
+	    rot[rotIndex]->mvPos(); 
+	}
+    }
+}
+
 void Enigma::encrypt(char& letter)
 {
   int encLetter = letter - 'A';
@@ -99,44 +134,10 @@ void Enigma::encrypt(char& letter)
   
   letter = encLetter + 'A';
 }
-  
-void Enigma::rotateRotors()
-{
-  rot[nrOfRotors-1]->mvPos();
-  
-  if(nrOfRotors > 1)
-    {
-      bool notchesalign = true ;
-      for(int rotIndex = nrOfRotors - 2; rotIndex >= 0; rotIndex--)
-	{
-	  for(int i = rotIndex + 1; i < nrOfRotors; i++)
-	    if(!rot[i]->isCurtPosNotch())
-	      {
-		notchesalign = false;
-		break;
-	      }
-	  if(notchesalign)
-	    rot[rotIndex]->mvPos(); 
-	}
-    }
-}
 
 int Enigma::getErr()
 {return err;}
 
-
-Enigma::~Enigma(){
-  delete pb;
-  delete rf;
-  delete pos;
-
-  if(nrOfRotors > 0)
-    {
-      for(int i = 0; i < nrOfRotors; i++)
-	delete rot[i];
-    }
-  delete[] rot;
-};
    
     
 	  

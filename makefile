@@ -3,30 +3,21 @@ CXX = g++
 CXXFLAGS = -Wall -g #-Wextra
 EXE = enigma
 
-
 $(EXE): $(OBJ)
 	$(CXX) $(CXXFLAGS) $^ -o $@ 
 
-main.o: main.cpp enigma.h
+%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $<
 
-enigma.o: enigma.cpp enigma.h rotClass.o posClass.h pbClass.o rfClass.o
-	$(CXX) $(CXXFLAGS) -c $<
+main.o: enigma.h
+enigma.o: enigma.h rotClass.o posClass.h pbClass.o rfClass.o
+pbClass.o: pbClass.h classUtils.h		
+rotClass.o: rotClass.h classUtils.h
+rfClass.o: rfClass.h classUtils.h	
+posClass.o: posClass.h classUtils.h	
 
-rotClass.o: rotClass.cpp rotClass.h classUtils.h
-	$(CXX) $(CXXFLAGS) -c $<
 
-posClass.o: posClass.cpp posClass.h classUtils.h
-	$(CXX) $(CXXFLAGS) -c $<
-
-pbClass.o: pbClass.cpp pbClass.h classUtils.h
-	$(CXX) $(CXXFLAGS) -c $<
-
-rfClass.o: rfClass.cpp rfClass.h classUtils.h
-	$(CXX) $(CXXFLAGS) -c $<
-
-classUtils.o: classUtils.cpp classUtils.h errors.h
-	$(CXX) $(CXXFLAGS) -c $<
+.PHONY: clean
 
 clean:
 	rm -f *.o $(EXE)

@@ -1,18 +1,18 @@
-#include<iostream>
-#include"errors.h"
-#include"classUtils.h"
 #include"pbClass.h"
-
 using namespace std;
 
-/* ============== PLUGBOARD CONSTRUCTOR ============== */
+/* ====== CONSTRUCTOR & DESCTRUCTOR ====== */
 Plugboard::Plugboard(const char* pbFname)
 {
   int originalArray[1024];
-
+  
   err = NO_ERROR;
   err = createArray(pbFname, originalArray, arrayLength);
 
+  
+  if(err == ERROR_OPENING_CONFIGURATION_FILE)
+    cerrCantOpenFile(pbFname);
+  
   if(err == NON_NUMERIC_CHARACTER)
     {
       cerr << "Non-numeric character in plugboard file "
@@ -23,8 +23,8 @@ Plugboard::Plugboard(const char* pbFname)
     if(!isInRange(originalArray, arrayLength))
       {
 	err = INVALID_INDEX;
-	cerr << "Out of range Character in plugboard file " << pbFname
-	     << endl;
+	cerr << "Out of range character in plugboard file "
+	     << pbFname << endl;
       }
     else if (arrayLength%2 != 0 || arrayLength > 26)
       {
@@ -41,24 +41,23 @@ Plugboard::Plugboard(const char* pbFname)
       }
     else
       {
-	err = NO_ERROR;
-      
 	pbMap = new int[arrayLength]; 
-
+	
 	for(int i = 0; i < arrayLength; i++)
 	  pbMap[i] = originalArray[i];
       }
   }
-};
+}
 
 
-/* ============== GET NR OF VALUES TO BE MAPPED ============== */
-int Plugboard::getErr()
+Plugboard::~Plugboard()
 {
-  return err;
-};
-  
+  if(err == NO_ERROR)
+    delete[] pbMap;
+}
 
+
+/* =============== FUNCTIONS ================ */
 void Plugboard::encode(int& encLetter)
 {
   for(int j = 0; j < arrayLength; j++)
@@ -77,9 +76,6 @@ void Plugboard::encode(int& encLetter)
       }
 }
 
+int Plugboard::getErr()
+{return err;}
 
-Plugboard::~Plugboard(){
-  if(err == NO_ERROR)
-    delete[] pbMap;
-  //cout << "Plugboard has died" << endl;
-}
