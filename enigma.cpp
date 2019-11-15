@@ -69,7 +69,9 @@ Enigma::~Enigma(){
   delete rf;
   delete pos;
 
-  if(nrOfRotors > 0)
+  if(nrOfRotors < 1)
+    delete rot[0];
+  else
     {
       for(int i = 0; i < nrOfRotors; i++)
 	delete rot[i];
