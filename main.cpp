@@ -1,3 +1,14 @@
+/* This program is designed to take user's input
+   in capital alphabetic format and encrypt it using 
+   the enigma machine, invented in Europe during WWII.
+   The machine consists of a plugboard, reflector
+   and rotors. This program is designed to take in
+   command line arguments for plugboard, reflector, 
+   rotors and initital position in the order that 
+   they are specified. */
+
+//Author: Iurie Tarlev
+
 #include<iostream>
 #include"enigma.h" 
 #include"errors.h"

@@ -3,7 +3,6 @@ using namespace std;
 
 
 /* ====== CONSTRUCTOR & DESCTRUCTOR ====== */
-
 Rotor::Rotor(const char *rotor_fname){
   int originalArray[1024];
   int actualArrayLength;
@@ -31,13 +30,12 @@ Rotor::Rotor(const char *rotor_fname){
       else if (!isInRange(originalArray, actualArrayLength))
 	{
 	  err = INVALID_INDEX;
-	  cerr << "Out of range character in rotor file: " << rotor_fname
-	       << endl;
+	  cerr << "Out of range character in rotor file: "
+	       << rotor_fname << endl;
 	}
       
       else 
 	{
-	  
 	  for(int i = 0; i < 26; i++)
 	    {
 	      rotorMap[i][1] = i; //values to be mapped
