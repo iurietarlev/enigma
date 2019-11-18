@@ -12,6 +12,7 @@
 
 //Author: Iurie Tarlev
 
+
 #include<iostream>
 #include"enigma.h" 
 #include"errors.h"
