@@ -7,6 +7,9 @@
    rotors and initital position in the order that 
    they are specified. */
 
+// It only accepts up to 4096 input characters
+// (including spaces)
+
 //Author: Iurie Tarlev
 
 #include<iostream>
@@ -57,9 +60,9 @@ int main(int argc, char** argv)
       break; 
     }
   
-  char msg[512];
+  char msg[4096];
   
-  cin.getline(msg, 512);
+  cin.getline(msg, 4096);
   
   char encMsg[strlen(msg)];
   
