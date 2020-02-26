@@ -10,4 +10,4 @@ The implementation of the Enigma and its components is done using C++ object ori
 
 The enigma machine can be configured in with any rotors in any positions by running it from the command line, like shown in an example below:
 
-<tt>`./enigma plugboards/I.pb reflectors/I.rf rotors/I.rot rotors/II.rot rotors/III.rot rotors/I.pos`</tt>
+<tt>./enigma plugboards/I.pb reflectors/I.rf rotors/I.rot rotors/II.rot rotors/III.rot rotors/I.pos</tt>
