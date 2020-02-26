@@ -5,3 +5,9 @@ This prgogram is a C++ implementation of the functionality of an [Enigma machine
 This program allows for simple input/output operations to configure the Enigma machine from command line arguments and configuration files. The Enigma machine encrypts (or decrypts) messages provided on the standard input stream, outputting the encrypted (or decrypted) message on the standard output stream.
 
 The implementation of the Enigma and its components is done using C++ object oriented concepts.
+
+# How to run
+
+The enigma machine can be configured in with any rotors in any positions by running it from the command line, like shown in an example below:
+
+<tt>`./enigma plugboards/I.pb reflectors/I.rf rotors/I.rot rotors/II.rot rotors/III.rot rotors/I.pos`</tt>
