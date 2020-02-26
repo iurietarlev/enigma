@@ -8,7 +8,7 @@ The implementation of the Enigma and its components is done using C++ object ori
 
 # How to run
 
-The enigma machine can be configured in with as many rotors as desired and with rotors being in any positions. To pass in the rotors they should be in simple textual file format and passed in on the command line in the following order: `plugboard`, `reflector`, `rotor(1)`, `rotor(2)`, `rotor(n)`, `text to be encrypted`.
+The enigma machine can be configured with as many rotors as desired and with rotors being in any order. To pass in the rotors they should be in simple textual file format and passed in on the command line in the following order: `plugboard`, `reflector`, `rotor(1)`, `rotor(2)`, `rotor(n)`, `text to be encrypted`.
 
 An example of how to run it with the already existent files is specified below:
 
