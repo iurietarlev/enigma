@@ -8,6 +8,8 @@ The implementation of the Enigma and its components is done using C++ object ori
 
 # How to run
 
-The enigma machine can be configured in with any rotors in any positions by running it from the command line, like shown in an example below:
+The enigma machine can be configured in with as many rotors as desired and with rotors being in any positions. To pass in the rotors they should be in simple textual file format and passed in on the command line in the following order: `plugboard`, `reflector`, `rotor(1)`, `rotor(2)`, `rotor(n)`, `text to be encrypted`.
 
-<tt>./enigma plugboards/I.pb reflectors/I.rf rotors/I.rot rotors/II.rot rotors/III.rot rotors/I.pos</tt>
+An example of how to run it with the already existent files is specified below:
+
+<tt>./enigma plugboards/I.pb reflectors/I.rf rotors/I.rot rotors/II.rot rotors/III.rot rotors/I.pos Hello World</tt>
